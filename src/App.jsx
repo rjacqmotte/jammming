@@ -10,7 +10,6 @@ function App() {
     <>
       <div className={styles.App__main_container}>
         <Header/>
-        <Menu/>
         <Container />
         <NavButtons />
       </div>

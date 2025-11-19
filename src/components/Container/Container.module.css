@@ -1,5 +1,4 @@
 .container {
-    /* Prend toute la hauteur disponible */
     flex: 1;
     border: 1px solid white;
     width: 100%;
