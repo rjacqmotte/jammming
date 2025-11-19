@@ -1,6 +1,7 @@
 import styles from './App.module.css'
 import Header from './components/Header/Header.jsx'
 import Menu from './components/Menu/Menu.jsx'
+import Container from './components/Container/Container.jsx'
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
       <div className={styles.App__main_container}>
         <Header/>
         <Menu/>
+        <Container />
       </div>
     </>
   )
