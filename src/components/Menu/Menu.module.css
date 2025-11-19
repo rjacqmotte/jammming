@@ -1,4 +1,7 @@
 
+.menu {
+    width: 100%;
+}
 
 .menu__list {
     display: flex;
