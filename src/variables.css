@@ -1,0 +1,13 @@
+:root {
+    --border-radius: 5px;
+    
+    --color-text: white;
+
+    --color-primary: black;
+    --color-secondary: rgb(49, 49, 103);
+    --color-tertary: rgb(93, 47, 47);
+    --color-quartary: rgb(43, 78, 43);
+
+    --color-background: var(--color-primary);
+    --color-button: var(--color-secondary);
+}
