@@ -2,10 +2,10 @@ import styles from './SearchBar.module.css'
 
 function SearchBar() {
     return (
-        <div>
-            <form>
-                <input></input>
-                <button></button>
+        <div className={styles.searchBar__container}>
+            <form className={styles.searchBar}>
+                <input placeholder='cherche une chanson pour ta playlist'></input>
+                <button>Search</button>
             </form>
         </div>
     )
