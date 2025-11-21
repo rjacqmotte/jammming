@@ -8,7 +8,7 @@ function MainView() {
         <div className={styles.mainView}>
             <Menu />
             <div className={styles.mainViewContainer}>
-        
+                <Track/>
             </div>
         </div>
     )
