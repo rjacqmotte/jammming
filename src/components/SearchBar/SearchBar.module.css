@@ -19,7 +19,4 @@
 }
 
 .searchBar button {
-    background-color: var(--color-text);
-    color: var(--color-primary);
-    padding: 0.3rem 0.6rem;
 }

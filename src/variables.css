@@ -1,13 +1,17 @@
 :root {
-    --border-radius: 5px;
+    --border-radius: 10px;
     
-    --color-text: white;
+    --color-black: rgb(30, 29, 28);
+    --color-white: rgb(235, 223, 205);
+    --color-grey-dark: rgb(90, 90, 90);
+    --color-grey-light: rgb(178, 178, 178);
 
-    --color-primary: #242424;
-    --color-secondary: rgb(49, 49, 103);
-    --color-tertary: rgb(93, 47, 47);
+    --color-primary: var(--color-black);
+    --color-secondary: var(--color-grey-dark);
+    --color-tertary: var(--color-grey-light);
     --color-quartary: rgb(43, 78, 43);
 
-    --color-background: var(--color-primary);
-    --color-button: var(--color-secondary);
+    --color-text: var(--color-white);
+    --color-background: var(--color-black);
+    --color-button: var(--color-black);
 }
