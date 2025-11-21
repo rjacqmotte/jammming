@@ -1,16 +1,16 @@
-import styles from './Container.module.css'
+import styles from './MainView.module.css'
 import Menu from '../Menu/Menu'
 import SearchBar from '../SearchBar/SearchBar'
 
-function Container() {
+function MainView() {
     return (
-        <div className={styles.container}>
+        <div className={styles.mainView}>
             <Menu />
-            <div className={styles.containerInner}>
+            <div className={styles.mainViewContainer}>
                 <SearchBar />
             </div>
         </div>
     )
 }
 
-export default Container
+export default MainView
