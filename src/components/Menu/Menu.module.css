@@ -3,7 +3,7 @@
     width: 100%;
 }
 
-.menu__list {
+.menuList {
     display: flex;
     list-style-type: none;
     justify-content: space-around;
@@ -11,7 +11,7 @@
     padding: 0;
 }
 
-.menu__item {
+.menuItem {
     font-size: 2rem;
     font-weight: bold;
 }
