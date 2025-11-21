@@ -6,3 +6,9 @@
     border-radius: var(--border-radius);
     background-color: var(--color-primary);
 }
+
+.containerInner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}

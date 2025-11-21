@@ -1,12 +1,14 @@
 import styles from './Container.module.css'
 import Menu from '../Menu/Menu'
-import MainView from '../MainView/MainView'
+import SearchBar from '../SearchBar/SearchBar'
 
 function Container() {
     return (
         <div className={styles.container}>
-            <Menu/>
-            <MainView/>
+            <Menu />
+            <div className={styles.containerInner}>
+                <SearchBar />
+            </div>
         </div>
     )
 }
