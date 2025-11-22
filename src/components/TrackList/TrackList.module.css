@@ -1,0 +1,19 @@
+.trackListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trackListTitle {
+    padding: 0;
+    margin: 0;
+}
+
+.trackList {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    
+}
+
+.trackListItem {}
