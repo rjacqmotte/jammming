@@ -1,0 +1,28 @@
+.saveFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.saveForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+    margin-top: 60px;
+}
+
+.saveFormBlock {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.saveFormInput {}
+
+.saveFormBtn {
+    margin-top: 30px;
+}
+
