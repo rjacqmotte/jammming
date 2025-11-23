@@ -3,7 +3,7 @@ import styles from './SaveForm.module.css'
 function SaveForm() {
     return (
         <div className={styles.saveFormContainer}>
-            <h2 calssName={styles.saveFormTitle}>Export</h2>
+            <h2 calssName={styles.saveFormTitle}>Save to Spotify</h2>
             <form className={styles.saveForm}>
                 <div className={styles.saveFormBlock}>
                     <label htmlFor='name' className={styles.saveFormLabel}>Name</label>
@@ -17,7 +17,7 @@ function SaveForm() {
                     <label htmlFor='password' className={styles.saveFormLabel}>Password</label>
                     <input id='password' type='password' className={styles.saveFormInput} />
                 </div>
-                <button className={styles.saveFormBtn} type='submit'>Submit</button>
+                <button className={styles.saveFormBtn} type='submit'>Save to Spotify</button>
             </form>
 
         </div>
