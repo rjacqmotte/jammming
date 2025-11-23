@@ -1,7 +1,7 @@
 import styles from './MainView.module.css'
 import Menu from '../Menu/Menu'
 import SearchBar from '../SearchBar/SearchBar'
-import Track from '../Track/Track'
+import TrackList from '../TrackList/TrackList'
 
 function MainView() {
     return (

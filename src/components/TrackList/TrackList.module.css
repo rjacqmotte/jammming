@@ -13,7 +13,13 @@
     display: flex;
     flex-direction: column;
     list-style-type: none;
-    
+    margin: 0;
+    padding: 0;
+    padding-bottom: 3rem;
+    overflow: scroll;
+
 }
 
-.trackListItem {}
+.trackListItem {
+    margin: 0.3rem;
+}
