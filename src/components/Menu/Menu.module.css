@@ -1,4 +1,11 @@
 
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .menu {
     width: 100%;
 }
@@ -14,4 +21,9 @@
 .menuItem {
     font-size: 2rem;
     font-weight: bold;
+}
+
+.menuTitle {
+    margin: 0;
+    padding: 0;
 }
