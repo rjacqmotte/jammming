@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     padding-bottom: 3rem;
-    overflow: scroll;
+    overflow-y: scroll;
 
 }
 

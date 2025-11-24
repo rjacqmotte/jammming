@@ -9,7 +9,7 @@ function MainView() {
         <div className={styles.mainView}>
             <Menu />
             <div className={styles.mainViewContainer}>
-                <SaveForm/>
+                <TrackList/>
             </div>
         </div>
     )
