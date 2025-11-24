@@ -23,3 +23,13 @@
 .trackListItem {
     margin: 0.3rem;
 }
+
+/* style hidden scroll */
+/* Chrome, Edge, Safari */
+.trackList::-webkit-scrollbar {
+  display: none;
+}
+/* Firefox */
+.trackList {
+  scrollbar-width: none;
+}
