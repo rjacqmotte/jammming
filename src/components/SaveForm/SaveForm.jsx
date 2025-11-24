@@ -3,7 +3,6 @@ import styles from './SaveForm.module.css'
 function SaveForm() {
     return (
         <div className={styles.saveFormContainer}>
-            <h2 calssName={styles.saveFormTitle}>Save to Spotify</h2>
             <form className={styles.saveForm}>
                 <div className={styles.saveFormBlock}>
                     <label htmlFor='name' className={styles.saveFormLabel}>Name</label>
