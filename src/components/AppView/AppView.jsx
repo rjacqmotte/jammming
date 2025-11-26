@@ -10,7 +10,7 @@ function AppView(props) {
       <div className={styles.AppView}>
         <Header/>
         <MainView appState={props.appState}/>
-        <NavButtons />
+        <NavButtons config={props.appState.buttons}/>
       </div>
     </>
   )

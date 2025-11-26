@@ -7,11 +7,11 @@ import SaveForm from '../SaveForm/SaveForm'
 function MainView(props) {
     return (
         <div className={styles.mainView}>
-            <Menu title={props.appState} />
+            <Menu number={props.appState.number} title={props.appState.title} />
             <div className={styles.mainViewContainer}>
-                {props.appState === 'Search' && <SearchBar/>}
-                {props.appState === 'Select' && <TrackList/>}
-                {props.appState === 'Save to Spotify' && <SaveForm/>}
+                {props.appState.view === 'searchBar' && <SearchBar/>}
+                {props.appState.view === 'trackList' && <TrackList/>}
+                {props.appState.view === 'saveForm' && <SaveForm/>}
             </div>
         </div>
     )
