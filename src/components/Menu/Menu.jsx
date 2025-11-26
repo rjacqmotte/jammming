@@ -1,6 +1,6 @@
 import styles from './Menu.module.css'
 
-function Menu() {
+function Menu(props) {
     return (
         <div className={styles.menuContainer}>
         <nav className={styles.menu}>
@@ -11,7 +11,7 @@ function Menu() {
                 <li className={styles.menuItem}>4</li>
             </ul>
         </nav>
-        <h2 className={styles.menuTitle}>titre actuel</h2>
+        <h2 className={styles.menuTitle}>{props.title}</h2>
         </div>
     )
 }

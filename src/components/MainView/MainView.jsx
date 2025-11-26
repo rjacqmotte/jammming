@@ -4,12 +4,14 @@ import SearchBar from '../SearchBar/SearchBar'
 import TrackList from '../TrackList/TrackList'
 import SaveForm from '../SaveForm/SaveForm'
 
-function MainView() {
+function MainView(props) {
     return (
         <div className={styles.mainView}>
-            <Menu />
+            <Menu title={props.appState} />
             <div className={styles.mainViewContainer}>
-                <TrackList/>
+                {props.appState === 'Search' && <SearchBar/>}
+                {props.appState === 'Select' && <TrackList/>}
+                {props.appState === 'Save to Spotify' && <SaveForm/>}
             </div>
         </div>
     )

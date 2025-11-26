@@ -3,13 +3,13 @@ import Header from '../Header/Header.jsx'
 import MainView from '../MainView/MainView.jsx'
 import NavButtons from '../NavButtons/NavButtons.jsx'
 
-function AppView() {
+function AppView(props) {
 
   return (
     <>
       <div className={styles.AppView}>
         <Header/>
-        <MainView />
+        <MainView appState={props.appState}/>
         <NavButtons />
       </div>
     </>
