@@ -5,17 +5,29 @@ import './variables.css'
 
 function App() {
   const appStates = [
-      {number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A'},
-      {number: 2, title: 'Select', view: 'trackList', buttons: 'config_B'},
-      {number: 3, title: 'Confirm', view: 'trackList2', buttons: 'config_C'},
-      {number: 4, title: 'Save on Spotify', view: 'saveForm', buttons: 'config_D'}
-    ]
+    { number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A' },
+    { number: 2, title: 'Select', view: 'trackList', buttons: 'config_B' },
+    { number: 3, title: 'Confirm', view: 'trackList2', buttons: 'config_C' },
+    { number: 4, title: 'Save on Spotify', view: 'saveForm', buttons: 'config_D' }
+  ]
 
-  const [appState, setAppState] = useState(appStates[3])
+  const [indexState, setIndexState] = useState(0)
+
+  function nextState() {
+    setIndexState(prev => Math.min(prev + 1, appStates.length - 1))
+  }
+  function previousState() {
+    setIndexState(prev => Math.max(prev - 1, 0))
+  }
+
+  const handleClickNavButtons = [nextState, previousState]
+
+  // On dérive l’état courant à partir de l’index
+  const appState = appStates[indexState]
 
   return (
     <>
-      <AppView appState={appState} />
+      <AppView appState={appState} onClickNavButtons={handleClickNavButtons} />
     </>
   )
 }
