@@ -23,6 +23,12 @@
 .menuItem {
     font-size: 2rem;
     font-weight: bold;
+    color: var(--color-secondary);
+}
+
+.menuItemIsActive {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .menuTitle {

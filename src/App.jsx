@@ -8,7 +8,7 @@ function App() {
       {number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A'},
       {number: 2, title: 'Select', view: 'trackList', buttons: 'config_B'},
       {number: 3, title: 'Confirm', view: 'trackList2', buttons: 'config_C'},
-      {number: 1, title: 'Save on Spotify', view: 'saveForm', buttons: 'config_D'}
+      {number: 4, title: 'Save on Spotify', view: 'saveForm', buttons: 'config_D'}
     ]
 
   const [appState, setAppState] = useState(appStates[3])
