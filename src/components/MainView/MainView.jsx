@@ -1,6 +1,6 @@
 import styles from './MainView.module.css'
 import Menu from '../Menu/Menu'
-import SearchBar from '../SearchBar/SearchBar'
+import SearchBar from '../SearchBarView/SearchBarView'
 import TrackList from '../TrackList/TrackList'
 import SaveForm from '../SaveForm/SaveForm'
 

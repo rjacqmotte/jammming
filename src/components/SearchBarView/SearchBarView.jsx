@@ -1,7 +1,7 @@
-import styles from './SearchBar.module.css'
+import styles from './SearchBarView.module.css'
 import { useState } from 'react'
 
-function SearchBar() {
+function SearchBarView() {
     const [userInput, setUserInput] = useState()
 
     function handleUserInput(e) {
@@ -23,4 +23,4 @@ function SearchBar() {
     )
 }
 
-export default SearchBar
+export default SearchBarView
