@@ -1,6 +1,5 @@
-
 .App {
-  height: 100vh;   /* fallback par défaut */
+  height: 100vh; /* fallback par défaut */
   width: 100vw;
 }
 
@@ -9,4 +8,3 @@
     height: 100dvh; /* utilisé si dispo */
   }
 }
-

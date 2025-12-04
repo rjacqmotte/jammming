@@ -1,28 +1,28 @@
 .saveFormContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
 }
 
 .saveForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
 }
 
 .saveFormBlock {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
-.saveFormInput {}
+.saveFormInput {
+}
 
 .saveFormBtn {
-    margin-top: 30px;
+  margin-top: 30px;
 }
-

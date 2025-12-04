@@ -16,11 +16,15 @@
 html {
   box-sizing: border-box;
 }
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -67,7 +71,6 @@ button {
   min-height: 48px;
   background-color: var(--color-secondary);
   color: var(--color-text);
-
 }
 button:hover {
   border-color: var(--color-secondary);
