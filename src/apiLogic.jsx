@@ -1,13 +1,37 @@
-const tmdbKey = '7b72153b96109e6258163b1b53f3024e';
-const tmdbBaseUrl = 'https://api.themoviedb.org/3';
-const playBtn = document.getElementById('playBtn');
+const testUserSearch = 'tailor swift';
+const testEncodeUserSearch = encodeURIComponent(testUserSearch);
+console log(`testQuerry: ${testQuerry}`);
+const testParams = `?q=${testEncodeUserSearch}&type=track&limit=10`;
+const testSpotifyBaseUrl = import.meta.env.VITE_API_URL;
+const testFullUrl = `${testSpotifyBaseUrl}${testParams}`;
+console.log(`testFullUrl : ${testFullUrl}`);
+const accessToken = BQAK05wEzllpJi2I5ExWUr-wSXz9w_rgLiMktKP      vB-TT7xTQ1XxJYchT5loMIBUR7qi-G2DVKepWgiQy9Knj84xqIDPgnns      laf2Na49AMIPJgIQyF6nZqbjEQ0a_FCbRVyzASMeEh2c;
+
+const getData = async () => {
+    try {
+        const response = await fetch(testFullUrl, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            console.log(jsonResponse); 
+        }
+        throw new Error('Request failed');
+    }
+    catch (error) {
+      console.log(error);
+    }
+}
+l
 
 const getGenres = async () => {
   const genreRequestEndpoint = '/genre/movie/list';
   const requestParams = `?api_key=${tmdbKey}`;
   const urlToFetch = `${tmdbBaseUrl}${genreRequestEndpoint}${requestParams}`;
   console.log(urlToFetch);
-
+  
   try {
     const response = await fetch(urlToFetch);
     if (response.ok) {
