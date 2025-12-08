@@ -1,97 +1,36 @@
-const testUserSearch = 'tailor swift';
-const testEncodeUserSearch = encodeURIComponent(testUserSearch);
-console log(`testQuerry: ${testQuerry}`);
-const testParams = `?q=${testEncodeUserSearch}&type=track&limit=10`;
-const testSpotifyBaseUrl = import.meta.env.VITE_API_URL;
-const testFullUrl = `${testSpotifyBaseUrl}${testParams}`;
-console.log(`testFullUrl : ${testFullUrl}`);
-const accessToken = BQAK05wEzllpJi2I5ExWUr-wSXz9w_rgLiMktKP      vB-TT7xTQ1XxJYchT5loMIBUR7qi-G2DVKepWgiQy9Knj84xqIDPgnns      laf2Na49AMIPJgIQyF6nZqbjEQ0a_FCbRVyzASMeEh2c;
-
-const getData = async () => {
-    try {
-        const response = await fetch(testFullUrl, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`
-          }
-        });
-        if (response.ok) {
-            const jsonResponse = await response.json();
-            console.log(jsonResponse); 
-        }
-        throw new Error('Request failed');
-    }
-    catch (error) {
-      console.log(error);
-    }
+// Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
+const token =
+  'BQBS2-M9tbUDdN2sdW4vlAnPAno_HO4nR3-aC1g2HUxqJ7WtZIbnnkpc8hkHNXAUG5u_0NI5Armft5rW9YPWSNxU4z3uWET4gvlJbkMawrR3yGJ8RXZ3vlMW1hJvIEziSge0v40nhig';
+async function fetchWebApi(endpoint, method, body) {
+  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method,
+    body: JSON.stringify(body),
+  });
+  return await res.json();
 }
-l
 
-const getGenres = async () => {
-  const genreRequestEndpoint = '/genre/movie/list';
-  const requestParams = `?api_key=${tmdbKey}`;
-  const urlToFetch = `${tmdbBaseUrl}${genreRequestEndpoint}${requestParams}`;
-  console.log(urlToFetch);
-  
-  try {
-    const response = await fetch(urlToFetch);
-    if (response.ok) {
-      const jsonResponse = await response.json();
-      const genres = jsonResponse.genres;
-      console.log(genres);
-      return genres;
-    }
-  } catch (error) {
-    console.log(error)
-  }
-};
+async function getTopTracks() {
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+  return (
+    await fetchWebApi('v1/me/top/tracks?time_range=long_term&limit=5', 'GET')
+  ).items;
+}
 
-const getMovies = async () => {
-  const selectedGenre = getSelectedGenre();
-  const discoverMovieEndpoint = '/discover/movie';
-  const requestParams = `?api_key=${tmdbKey}&with_genres=${selectedGenre}`;
-  const urlToFetch = `${tmdbBaseUrl}${discoverMovieEndpoint}${requestParams}`;
-  console.log(urlToFetch);
+async function showTopTracks() {
+  const topTracks = await getTopTracks();
+  console.log(
+    topTracks?.map(
+      ({ name, artists }) =>
+        `${name} by ${artists.map((artist) => artist.name).join(', ')}`
+    )
+  );
+}
 
-  try {
-    const response = await fetch(urlToFetch);
-    if (response.ok) {
-      const jsonResponse = await response.json();
-      const movies = jsonResponse.results;
-      return movies;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+export default showTopTracks;
 
-const getMovieInfo = async (movie) => {
-  const movieId = movie.id;
-  const movieEndpoint = `/movie/${movieId}`;
-  const requestParams = `?api_key=${tmdbKey}`;
-  const urlToFetch = `${tmdbBaseUrl}${movieEndpoint}${requestParams}`;
-
-  try {
-    const response = await fetch(urlToFetch);
-    if (response.ok) {
-      const movieInfo = await response.json();
-      return movieInfo;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// Gets a list of movies and ultimately displays the info of a random movie from the list
-const showRandomMovie = async () => {
-  const movieInfo = document.getElementById('movieInfo');
-  if (movieInfo.childNodes.length > 0) {
-    clearCurrentMovie();
-  }
-  const movie = await getMovies();
-  const randomMovie = getRandomMovie(movie);
-  const info = await getMovieInfo(randomMovie);
-  displayMovie(info);
-};
-
-getGenres().then(populateGenreDropdown);
-playBtn.onclick = showRandomMovie;
+/*
+{"access_token":"BQBS2-M9tbUDdN2sdW4vlAnPAno_HO4nR3-aC1g2HUxqJ7WtZIbnnkpc8hkHNXAUG5u_0NI5Armft5rW9YPWSNxU4z3uWET4gvlJbkMawrR3yGJ8RXZ3vlMW1hJvIEziSge0v40nhig","token_type":"Bearer","expires_in":3600}renaud@pop-os:~/Git projects/jammming$ 
+*/
