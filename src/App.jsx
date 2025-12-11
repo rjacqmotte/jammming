@@ -4,8 +4,11 @@ import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
 
 function App() {
-  function handleConnectToLastFM() {
+  function handleConnectToLastFM(event) {
+    event.preventDefault();
+    console.log(event);
     console.log('connect button clicked!!!');
+    console.log(import.meta.env.VITE_TEST);
   }
 
   /* gestion de l'état de l'application*/
