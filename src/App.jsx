@@ -11,6 +11,43 @@ function App() {
     return CryptoJS.MD5(text).toString();
   }
 
+  // Créer une session Last.fm avec le token reçu
+  async function createLastfmSession(token, apiKey, secret, apiUrl) {
+    try {
+      // Construire la string à hasher (paramètres en ordre alphabétique + secret)
+      const stringToHash = `api_key${apiKey}methodauth.getSessiontoken${token}${secret}`;
+      const apiSignature = calculateMD5(stringToHash);
+      
+      console.log('Signature créée:', apiSignature);
+      
+      // Envoyer la requête à Last.fm pour créer la session
+      const response = await fetch(
+        `${apiUrl}?method=auth.getSession&api_key=${apiKey}&token=${token}&api_sig=${apiSignature}&format=json`
+      );
+      
+      const sessionData = await response.json();
+      
+      if (sessionData.error) {
+        console.error('Erreur Last.fm:', sessionData.message);
+        return false;
+      }
+      
+      if (sessionData.session?.key) {
+        console.log('Session créée avec succès!');
+        console.log('Session key:', sessionData.session.key);
+        console.log('Username:', sessionData.session.name);
+        
+        // Sauvegarder la clé de session pour les appels futurs
+        localStorage.setItem('lastfm_session_key', sessionData.session.key);
+        localStorage.setItem('lastfm_username', sessionData.session.name);
+        return true;
+      }
+    } catch (error) {
+      console.error('Erreur lors de la création de la session:', error);
+      return false;
+    }
+  }
+
   /* Envoie la demande de token et renvoie le client sur la page de connection*/
   function handleConnectToLastFM(event) {
     event.preventDefault();
@@ -26,7 +63,6 @@ function App() {
 
 
   /* Ecoute l'url de callback pour capturer le token */
-  const [isCallback, setIsCallback] = useState(false);
   useEffect(() => {
     // Vérifier si on est sur /callback avec un token
     if (window.location.pathname === '/callback') {
@@ -39,19 +75,14 @@ function App() {
 
         // Nettoyer l'URL et revenir à la page principale
         window.history.replaceState({}, '', '/');
-        setIsCallback(false);
 
-        // TODO: Créer la session Last.fm avec ce token
-        // Créer la signature pour l'authentification (comme demandé par l'API Last.fm)
+        // Créer la session Last.fm avec ce token
         const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
         const secret = import.meta.env.VITE_LASTFM_CLIENT_SECRET;
+        const apiUrl = import.meta.env.VITE_API_URL;
         
-        // Construire la string à hasher (paramètres en ordre alphabétique + secret)
-        const stringToHash = `api_key${apiKey}methodauth.getSessiontoken${token}${secret}`;
-        const apiSignature = calculateMD5(stringToHash);
-        
-        console.log('Signature créée:', apiSignature);
-
+        // Appel simple et lisible de la fonction async
+        createLastfmSession(token, apiKey, secret, apiUrl);
       }
     }
   }, []);
