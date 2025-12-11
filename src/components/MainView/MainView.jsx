@@ -1,7 +1,7 @@
 import styles from './MainView.module.css';
 import Menu from '../Menu/Menu';
 import SearchBarLogic from '../SearchBarLogic/SearchBarLogic';
-import TrackList from '../TrackList/TrackList';
+import TrackList from '../TrackList/TrackList'
 import SaveForm from '../SaveForm/SaveForm';
 
 function MainView(props) {

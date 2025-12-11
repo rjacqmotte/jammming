@@ -2,11 +2,11 @@ import { useState } from 'react';
 import styles from './App.module.css';
 import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
-import showTopTracks from './apiLogic';
 
 function App() {
-  showTopTracks();
 
+
+  /* gestion de l'état de l'application*/
   const appStates = [
     { number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A' },
     { number: 2, title: 'Select', view: 'trackList', buttons: 'config_B' },
