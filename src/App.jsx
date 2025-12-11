@@ -4,7 +4,9 @@ import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
 
 function App() {
-
+  function handleConnectToLastFM() {
+    console.log('connect button clicked!!!');
+  }
 
   /* gestion de l'état de l'application*/
   const appStates = [
@@ -35,7 +37,11 @@ function App() {
 
   return (
     <>
-      <AppView appState={appState} onClickNavButtons={handleClickNavButtons} />
+      <AppView
+        appState={appState}
+        onClickNavButtons={handleClickNavButtons}
+        onClickConnectButton={handleConnectToLastFM}
+      />
     </>
   );
 }

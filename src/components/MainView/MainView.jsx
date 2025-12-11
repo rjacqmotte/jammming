@@ -11,7 +11,7 @@ function MainView(props) {
       <div className={styles.mainViewContainer}>
         {props.appState.view === 'searchBar' && <SearchBarLogic />}
         {props.appState.view === 'trackList' && <TrackList />}
-        {props.appState.view === 'saveForm' && <SaveForm />}
+        {props.appState.view === 'saveForm' && <SaveForm onClickConnectButton={props.onClickConnectButton} />}
       </div>
     </div>
   );

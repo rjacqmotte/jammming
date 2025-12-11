@@ -1,9 +1,9 @@
 import styles from './SaveForm.module.css';
 
-function SaveForm() {
+function SaveForm(props) {
   return (
     <div className={styles.saveFormContainer}>
-      <form className={styles.saveForm}>
+      <form className={styles.saveForm} onSubmit={props.onClickConnectButton}>
         <div className={styles.saveFormBlock}>
           <label htmlFor="name" className={styles.saveFormLabel}>
             Name
@@ -27,7 +27,7 @@ function SaveForm() {
           />
         </div>
         <button className={styles.saveFormBtn} type="submit">
-          Save to Spotify
+          Connect to Last FM
         </button>
       </form>
     </div>

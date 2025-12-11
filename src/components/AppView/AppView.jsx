@@ -8,7 +8,7 @@ function AppView(props) {
     <>
       <div className={styles.AppView}>
         <Header />
-        <MainView appState={props.appState} />
+        <MainView appState={props.appState} onClickConnectButton={props.onClickConnectButton} />
         <NavButtons
           config={props.appState.buttons}
           onClick={props.onClickNavButtons}
