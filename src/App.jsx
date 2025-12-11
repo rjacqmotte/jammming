@@ -1,21 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './App.module.css';
 import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
+import CryptoJS from 'crypto-js';
 
 function App() {
   /* gestion de l'API*/
+  // Méthode de hachage MD5 nécessaire pour signer l'authentification Last.fm
+  function calculateMD5(text) {
+    return CryptoJS.MD5(text).toString();
+  }
+
   /* Envoie la demande de token et renvoie le client sur la page de connection*/
   function handleConnectToLastFM(event) {
     event.preventDefault();
     console.log(event);
     console.log('connect button clicked!!!');
     console.log(import.meta.env.VITE_TEST);
+
+    const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+    const callbackUrl = encodeURIComponent("http://localhost:5173/callback");
+
+    window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
   }
+
 
   /* Ecoute l'url de callback pour capturer le token */
   const [isCallback, setIsCallback] = useState(false);
-
   useEffect(() => {
     // Vérifier si on est sur /callback avec un token
     if (window.location.pathname === '/callback') {
@@ -31,6 +42,16 @@ function App() {
         setIsCallback(false);
 
         // TODO: Créer la session Last.fm avec ce token
+        // Créer la signature pour l'authentification (comme demandé par l'API Last.fm)
+        const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+        const secret = import.meta.env.VITE_LASTFM_CLIENT_SECRET;
+        
+        // Construire la string à hasher (paramètres en ordre alphabétique + secret)
+        const stringToHash = `api_key${apiKey}methodauth.getSessiontoken${token}${secret}`;
+        const apiSignature = calculateMD5(stringToHash);
+        
+        console.log('Signature créée:', apiSignature);
+
       }
     }
   }, []);
