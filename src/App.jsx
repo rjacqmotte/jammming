@@ -18,26 +18,26 @@ function App() {
       // Construire la string à hasher (paramètres en ordre alphabétique + secret)
       const stringToHash = `api_key${apiKey}methodauth.getSessiontoken${token}${secret}`;
       const apiSignature = calculateMD5(stringToHash);
-      
+
       console.log('Signature créée:', apiSignature);
-      
+
       // Envoyer la requête à Last.fm pour créer la session
       const response = await fetch(
         `${apiUrl}?method=auth.getSession&api_key=${apiKey}&token=${token}&api_sig=${apiSignature}&format=json`
       );
-      
+
       const sessionData = await response.json();
-      
+
       if (sessionData.error) {
         console.error('Erreur Last.fm:', sessionData.message);
         return false;
       }
-      
+
       if (sessionData.session?.key) {
         console.log('Session créée avec succès!');
         console.log('Session key:', sessionData.session.key);
         console.log('Username:', sessionData.session.name);
-        
+
         // Sauvegarder la clé de session pour les appels futurs
         localStorage.setItem('lastfm_session_key', sessionData.session.key);
         localStorage.setItem('lastfm_username', sessionData.session.name);
@@ -57,11 +57,10 @@ function App() {
     console.log(import.meta.env.VITE_TEST);
 
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-    const callbackUrl = encodeURIComponent("http://localhost:5173/callback");
+    const callbackUrl = encodeURIComponent('http://localhost:5173/callback');
 
     window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
   }
-
 
   /* Ecoute l'url de callback pour capturer le token */
   useEffect(() => {
@@ -81,18 +80,34 @@ function App() {
         const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
         const secret = import.meta.env.VITE_LASTFM_CLIENT_SECRET;
         const apiUrl = import.meta.env.VITE_API_URL;
-        
+
         // Appel simple et lisible de la fonction async
         createLastfmSession(token, apiKey, secret, apiUrl);
       }
     }
   }, []);
 
-  // --- SEARCH ET APPEL API
-  function handleSearch() {
+  // --- SEARCH APPEL API ---
+  const [searchQuerry, setSearchQuerry] = useState(roxanne);
 
+  async function handleSearch() {
+    console.log('button search cliqué');
+
+    // construction de l'url
+    const apiURL = 'http://ws.audioscrobbler.com/2.0/';
+    const urlToFetch = `/?method=track.${searchQuerry}&api_key=${localStorage.getItem(lastfm_session_key)}Y&format=json`;
+    console.log(`url envooyée: ${urlToFetch}`);
+
+    const response = await fetch(urlToFetch);
+    console.log(response);
+    const searchData = await response.json();
+    console.log(searchData);
+
+    if (searchData.error) {
+      console.error('Erreur Last.fm:', sessionSearch.message);
+      return false;
+    }
   }
-
 
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
@@ -111,7 +126,7 @@ function App() {
   const [indexState, setIndexState] = useState(0);
 
   function nextState() {
-    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1))
+    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
   }
   function previousState() {
     setIndexState((prev) => Math.max(prev - 1, 0));
@@ -128,6 +143,8 @@ function App() {
         appState={appState}
         onClickNavButtons={handleClickNavButtons}
         onClickConnectButton={handleConnectToLastFM}
+        onClicSearchButton={handleSearch}
+        onSearch={handleSearch}
       />
     </>
   );
