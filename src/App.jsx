@@ -11,6 +11,7 @@ function App() {
     return CryptoJS.MD5(text).toString();
   }
 
+  // --- LAST.FM AUTHENTICATION FLOW ---
   // Créer une session Last.fm avec le token reçu
   async function createLastfmSession(token, apiKey, secret, apiUrl) {
     try {
@@ -87,6 +88,13 @@ function App() {
     }
   }, []);
 
+  // --- SEARCH ET APPEL API
+  function handleSearch() {
+
+  }
+
+
+  // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
   const appStates = [
     { number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A' },
@@ -103,7 +111,7 @@ function App() {
   const [indexState, setIndexState] = useState(0);
 
   function nextState() {
-    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
+    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1))
   }
   function previousState() {
     setIndexState((prev) => Math.max(prev - 1, 0));
