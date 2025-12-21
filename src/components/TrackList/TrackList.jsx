@@ -1,43 +1,15 @@
 import styles from './TrackList.module.css';
 import Track from '../Track/Track';
 
-function TrackList() {
+function TrackList(props) {
   return (
     <div className={styles.trackListContainer}>
       <ul className={styles.trackList}>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
-        <li className={styles.trackListItem}>
-          <Track />
-        </li>
+        {props.trackList.map((track, index) => (
+          <li key={track.url || index} className={styles.trackListItem}>
+            <Track track={track} />
+          </li>
+        ))}
       </ul>
     </div>
   );

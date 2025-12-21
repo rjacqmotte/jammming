@@ -5,7 +5,6 @@ import './variables.css';
 import CryptoJS from 'crypto-js';
 
 function App() {
-  
   /* --- gestion de l'API --- */
   // Méthode de hachage MD5 nécessaire pour signer l'authentification Last.fm
   function calculateMD5(text) {
@@ -61,7 +60,7 @@ function App() {
     const callbackUrl = encodeURIComponent('http://localhost:5173/callback');
 
     window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
-    }
+  }
 
   /* Ecoute l'url de callback pour capturer le token */
   useEffect(() => {
@@ -89,6 +88,7 @@ function App() {
   }, []);
 
   // --- SEARCH APPEL API ---
+  const [trackList, setTrackList] = useState(null);
   const [searchQuerry, setSearchQuerry] = useState('roxanne');
 
   async function handleSearch(event) {
@@ -108,13 +108,18 @@ function App() {
     const tracks = searchData.results.trackmatches.track;
     console.log(tracks);
 
-    
+    setTrackList(tracks);
+
+    nextState();
 
     if (searchData.error) {
       console.error('Erreur Last.fm:', sessionSearch.message);
       return false;
     }
   }
+
+  // --- DISPLAY SONGS ---
+  function displaySongs(arrayOfSongs) {}
 
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
@@ -151,6 +156,7 @@ function App() {
         onClickNavButtons={handleClickNavButtons}
         onClickConnectButton={handleConnectToLastFM}
         onSearch={handleSearch}
+        trackList={trackList}
       />
     </>
   );
