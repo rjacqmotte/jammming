@@ -5,7 +5,8 @@ import './variables.css';
 import CryptoJS from 'crypto-js';
 
 function App() {
-  /* gestion de l'API*/
+  
+  /* --- gestion de l'API --- */
   // Méthode de hachage MD5 nécessaire pour signer l'authentification Last.fm
   function calculateMD5(text) {
     return CryptoJS.MD5(text).toString();
@@ -88,7 +89,7 @@ function App() {
   }, []);
 
   // --- SEARCH APPEL API ---
-  const [searchQuerry, setSearchQuerry] = useState(roxanne);
+  const [searchQuerry, setSearchQuerry] = useState('roxanne');
 
   async function handleSearch() {
     console.log('button search cliqué');

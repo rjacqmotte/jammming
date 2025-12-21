@@ -2,7 +2,7 @@ import styles from './SearchBarLogic.module.css';
 import React, { useState } from 'react';
 import SearchBarView from '../SearchBarView/SearchBarView';
 
-function SearchBarLogic() {
+function SearchBarLogic(props) {
   const [userInput, setUserInput] = useState();
 
   function handleUserInput(e) {
@@ -18,7 +18,7 @@ function SearchBarLogic() {
   return (
     <SearchBarView
       onChange={handleUserInput}
-      onSubmit={handleSubmit}
+      onSearch={props.onSearch}
       inputValue={userInput}
     />
   );

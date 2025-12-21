@@ -2,7 +2,7 @@ import styles from './SearchBarView.module.css';
 
 function SearchBarView(props) {
   return (
-    <form className={styles.searchBar} onSubmit={props.onSubmit}>
+    <form className={styles.searchBar} onSubmit={props.onSearch}>
       <input
         id="searchBar"
         type="text"
