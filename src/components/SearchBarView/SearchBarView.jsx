@@ -6,8 +6,8 @@ function SearchBarView(props) {
       <input
         id="searchBar"
         type="text"
-        onChange={props.handleUserInput}
-        value={props.inputValue}
+        onChange={props.onSearchChange}
+        value={props.searchValue}
         placeholder="cherche une chanson pour ta playlist"
       ></input>
       <button type="submit">Search</button>

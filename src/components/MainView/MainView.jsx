@@ -9,7 +9,7 @@ function MainView(props) {
     <div className={styles.mainView}>
       <Menu number={props.appState.number} title={props.appState.title} />
       <div className={styles.mainViewContainer}>
-        {props.appState.view === 'searchBar' && <SearchBarLogic onSearch={props.onSearch}/>}
+        {props.appState.view === 'searchBar' && <SearchBarLogic searchValue={props.searchValue} onSearchChange={props.onSearchChange} onSearch={props.onSearch}/>}
         {props.appState.view === 'trackList' && <TrackList trackList={props.trackList} />}
         {props.appState.view === 'saveForm' && <SaveForm onClickConnectButton={props.onClickConnectButton} />}
       </div>

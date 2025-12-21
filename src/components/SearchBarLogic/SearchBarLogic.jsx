@@ -3,23 +3,12 @@ import React, { useState } from 'react';
 import SearchBarView from '../SearchBarView/SearchBarView';
 
 function SearchBarLogic(props) {
-  const [userInput, setUserInput] = useState();
-
-  function handleUserInput(e) {
-    setUserInput(e.target.value);
-  }
-
-  function handleSubmit(e) {
-    console.log('handlesubmit acitf');
-    e.preventDefault();
-    alert('test');
-  }
 
   return (
     <SearchBarView
-      onChange={handleUserInput}
+      onSearchChange={props.onSearchChange}
       onSearch={props.onSearch}
-      inputValue={userInput}
+      searchValue={props.searchValue}
     />
   );
 }

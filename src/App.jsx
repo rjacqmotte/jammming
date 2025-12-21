@@ -87,7 +87,16 @@ function App() {
     }
   }, []);
 
-  // --- SEARCH APPEL API ---
+  // --- SEARCH ---
+
+  // search value
+  const [searchValue, setSearchValue] = useState();
+
+  function handleSearchChange(e) {
+    setSearchValue(e.target.value);
+  }
+
+  // api
   const [trackList, setTrackList] = useState(null);
   const [searchQuerry, setSearchQuerry] = useState('roxanne');
 
@@ -117,9 +126,6 @@ function App() {
       return false;
     }
   }
-
-  // --- DISPLAY SONGS ---
-  function displaySongs(arrayOfSongs) {}
 
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
@@ -156,7 +162,10 @@ function App() {
         onClickNavButtons={handleClickNavButtons}
         onClickConnectButton={handleConnectToLastFM}
         onSearch={handleSearch}
+        onSearchChange={handleSearchChange}
+        searchValue={searchValue}
         trackList={trackList}
+        
       />
     </>
   );

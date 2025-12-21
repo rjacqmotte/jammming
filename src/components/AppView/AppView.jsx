@@ -12,6 +12,8 @@ function AppView(props) {
           appState={props.appState}
           onClickConnectButton={props.onClickConnectButton}
           onSearch={props.onSearch}
+          onSearchChange={props.onSearchChange}
+          searchValue={props.searchValue}
           trackList={props.trackList}
         />
         <NavButtons
