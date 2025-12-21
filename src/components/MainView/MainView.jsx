@@ -1,6 +1,6 @@
 import styles from './MainView.module.css';
 import Menu from '../Menu/Menu';
-import SearchBarLogic from '../SearchBarLogic/SearchBarLogic';
+import SearchBar from '../SearchBar/SearchBar';
 import TrackList from '../TrackList/TrackList'
 import SaveForm from '../SaveForm/SaveForm';
 
@@ -9,7 +9,7 @@ function MainView(props) {
     <div className={styles.mainView}>
       <Menu number={props.appState.number} title={props.appState.title} />
       <div className={styles.mainViewContainer}>
-        {props.appState.view === 'searchBar' && <SearchBarLogic searchValue={props.searchValue} onSearchChange={props.onSearchChange} onSearch={props.onSearch}/>}
+        {props.appState.view === 'searchBar' && <SearchBar searchValue={props.searchValue} onSearchChange={props.onSearchChange} onSearch={props.onSearch}/>}
         {props.appState.view === 'trackList' && <TrackList trackList={props.trackList} />}
         {props.appState.view === 'saveForm' && <SaveForm onClickConnectButton={props.onClickConnectButton} />}
       </div>

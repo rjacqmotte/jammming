@@ -1,6 +1,6 @@
-import styles from './SearchBarView.module.css';
+import styles from './SearchBar.module.css';
 
-function SearchBarView(props) {
+function SearchBar(props) {
   return (
     <form className={styles.searchBar} onSubmit={props.onSearch}>
       <input
@@ -15,4 +15,4 @@ function SearchBarView(props) {
   );
 }
 
-export default SearchBarView;
+export default SearchBar;
