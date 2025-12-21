@@ -98,16 +98,15 @@ function App() {
 
   // api
   const [trackList, setTrackList] = useState(null);
-  const [searchQuerry, setSearchQuerry] = useState('roxanne');
 
   async function handleSearch(event) {
-    event.preventDefault();
+    event.preventDefault(null);
     console.log('button search cliqué');
 
     // construction de l'url
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
     const apiURL = 'http://ws.audioscrobbler.com/2.0/';
-    const urlToFetch = `${apiURL}?method=track.search&track=${searchQuerry}&api_key=${apiKey}&format=json`;
+    const urlToFetch = `${apiURL}?method=track.search&track=${encodeURIComponent(searchValue)}&api_key=${apiKey}&format=json`;
     console.log(`url envoyée: ${urlToFetch}`);
 
     const response = await fetch(urlToFetch);
