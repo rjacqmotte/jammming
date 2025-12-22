@@ -1,5 +1,6 @@
 import styles from './Track.module.css';
 import moustachuImg from '../../assets/moustachu.jpg';
+import Button from '../ui/Button';
 
 function Track(props) {
   return (
@@ -13,7 +14,7 @@ function Track(props) {
         <h2>{props.track.name}</h2>
         <p>{props.track.artist}</p>
       </article>
-      <button className={styles.trackAddButton}>+</button>
+      <Button>+</Button>
     </div>
   );
 }
