@@ -1,7 +1,7 @@
-import style from './Button.modules.css';
+import styles from './Button.module.css';
 
 function Button() {
-  <button className={style.trackAddButton}></button>;
+  return <button className={styles.trackAddButton}>+</button>;
 }
 
 export default Button;

@@ -14,7 +14,7 @@ function Track(props) {
         <h2>{props.track.name}</h2>
         <p>{props.track.artist}</p>
       </article>
-      <Button>+</Button>
+      <Button/>
     </div>
   );
 }
