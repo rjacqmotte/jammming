@@ -1,8 +1,6 @@
 import styles from './Button.module.css';
 import { useState } from 'react';
 
-function handleClick() {}
-
 const BUTTON_CONFIG = {
   normal: { content: '+', className: styles.trackButtonAdd },
   isSelected: {
@@ -11,7 +9,7 @@ const BUTTON_CONFIG = {
   },
 };
 
-function Button() {
+function Button(props) {
   const [statusTrackBtn, setStatusTrackBtn] = useState('isSelected');
 
   function handleClick() {
@@ -20,7 +18,7 @@ function Button() {
 
   const config = BUTTON_CONFIG[statusTrackBtn];
   return (
-    <button className={config.className} onClick={handleClick}>
+    <button className={config.className} onClick={props.onSelect}>
       <span>{config.content}</span>
     </button>
   );

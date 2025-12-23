@@ -130,16 +130,20 @@ function App() {
   // variable pour sauver les tracks sélectionner
   const [selectedTracks, setSelectedTracks] = useState([]);
 
+  // si  le track est déjà dans l'array, on l'enlève. s'il n'y est pas, on l'ajoute.
   function handleSelectedTrack(track) {
-    setSelectedTracks(prev => { 
+    console.log('une track est selectionée ou supprimée');
+    setSelectedTracks((prev) => {
       if (prev.includes(track)) {
-        return prev.filter(item => item !== track);
+        console.log('une track est supprimée.');
+        return prev.filter((item) => item !== track);
       } else {
+        console.log('une track est ajoutée');
         return [...prev, track];
       }
     });
+    console.log(`la liste de tracks sélectionnée est : ${selectedTracks}`);
   }
-
 
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
@@ -179,7 +183,7 @@ function App() {
         onSearchChange={handleSearchChange}
         searchValue={searchValue}
         trackList={trackList}
-        
+        onSelectedTrack={handleSelectedTrack}
       />
     </>
   );

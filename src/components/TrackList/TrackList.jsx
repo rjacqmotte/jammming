@@ -7,7 +7,7 @@ function TrackList(props) {
       <ul className={styles.trackList}>
         {props.trackList.map((track, index) => (
           <li key={track.url || index} className={styles.trackListItem}>
-            <Track track={track} />
+            <Track track={track} onSelectedTrack={props.onSelectedTrack} />
           </li>
         ))}
       </ul>

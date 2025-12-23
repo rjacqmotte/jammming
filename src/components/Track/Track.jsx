@@ -3,10 +3,10 @@ import moustachuImg from '../../assets/moustachu.jpg';
 import Button from '../ui/Button';
 
 function Track(props) {
-  function passTrack() {
-    
+  function handleSelect() {
+    props.onSelectedTrack(props.track);
   }
-  
+
   return (
     <div className={styles.trackContainer}>
       <img
@@ -18,7 +18,7 @@ function Track(props) {
         <h2>{props.track.name}</h2>
         <p>{props.track.artist}</p>
       </article>
-      <Button/>
+      <Button onSelect={handleSelect}/>
     </div>
   );
 }
