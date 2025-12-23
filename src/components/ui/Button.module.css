@@ -6,8 +6,9 @@
   font-size: 2rem;
 }
 
-.trackAddButton--isSelected {
-  
+.trackAddButtonSelected {
+  background-color: aquamarine;
+  color: green;
 }
 
 .trackAddButton span {
