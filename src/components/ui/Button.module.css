@@ -11,7 +11,7 @@
   color: green;
 }
 
-.trackAddButton span {
+.trackButtonAdd span {
   display: inline-block;
   line-height: 1;
   transform: translateY(-3px);

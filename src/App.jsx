@@ -90,7 +90,7 @@ function App() {
   // --- SEARCH ---
 
   // search value
-  const [searchValue, setSearchValue] = useState();
+  const [searchValue, setSearchValue] = useState(null);
 
   function handleSearchChange(e) {
     setSearchValue(e.target.value);
