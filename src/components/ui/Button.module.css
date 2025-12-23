@@ -1,4 +1,4 @@
-.trackAddButton {
+.trackButtonAdd {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,7 +6,7 @@
   font-size: 2rem;
 }
 
-.trackAddButtonSelected {
+.trackButtonSelected {
   background-color: aquamarine;
   color: green;
 }
