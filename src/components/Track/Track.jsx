@@ -3,6 +3,10 @@ import moustachuImg from '../../assets/moustachu.jpg';
 import Button from '../ui/Button';
 
 function Track(props) {
+  function passTrack() {
+    
+  }
+  
   return (
     <div className={styles.trackContainer}>
       <img

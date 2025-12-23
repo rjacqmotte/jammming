@@ -126,6 +126,21 @@ function App() {
     }
   }
 
+  // --- SELECTION ET SAUVEGARDE DES TRACKS ---
+  // variable pour sauver les tracks sélectionner
+  const [selectedTracks, setSelectedTracks] = useState([]);
+
+  function handleSelectedTrack(track) {
+    setSelectedTracks(prev => { 
+      if (prev.includes(track)) {
+        return prev.filter(item => item !== track);
+      } else {
+        return [...prev, track];
+      }
+    });
+  }
+
+
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
   const appStates = [
