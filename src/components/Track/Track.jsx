@@ -3,7 +3,8 @@ import moustachuImg from '../../assets/moustachu.jpg';
 import Button from '../ui/Button';
 
 function Track(props) {
-  function handleSelect() {
+  function handleSelect(e) {
+    e.preventDefault();
     props.onSelectedTrack(props.track);
   }
 
