@@ -16,7 +16,7 @@ function Button(props) {
     setStatusTrackBtn(statusTrackBtn === 'normal' ? 'isSelected' : 'normal');
   }
 
-  const config = BUTTON_CONFIG[statusTrackBtn];
+  const config = BUTTON_CONFIG[props.buttonStatus];
   return (
     <button className={config.className} onClick={props.onSelect}>
       <span>{config.content}</span>

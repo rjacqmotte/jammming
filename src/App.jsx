@@ -191,6 +191,7 @@ function App() {
         searchValue={searchValue}
         trackList={trackList}
         onSelectedTrack={handleSelectedTrack}
+        selectedTracks={selectedTracks}
       />
     </>
   );

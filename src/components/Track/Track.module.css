@@ -9,6 +9,10 @@
   border-radius: var(--border-radius);
 }
 
+.isSelected {
+  background-color: var(--color-secondary);
+}
+
 .trackImg {
   height: 50px;
   width: 50px;
