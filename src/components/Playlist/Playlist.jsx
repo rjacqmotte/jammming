@@ -1,11 +1,11 @@
-import styles from './TrackList.module.css';
+import styles from './Playlist.module.css';
 import Track from '../Track/Track';
 
-function PLaylist(props) {
+function Playlist(props) {
   return (
     <div className={styles.trackListContainer}>
       <ul className={styles.trackList}>
-        {props.trackList.map((track, index) => (
+        {props.selectedTracks.map((track, index) => (
           <li key={track.url || index} className={styles.trackListItem}>
             <Track
               track={track}

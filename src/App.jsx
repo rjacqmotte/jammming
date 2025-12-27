@@ -133,7 +133,7 @@ function App() {
   
   /** variable pour sauver les tracks sélectionnées. array d'objet 'track'.
    *  - enregistre les tracks sélectionnées sur base des recherches
-   *  - références pour les styles css de Track et Button */+ 
+   *  - références pour les styles css de Track et Button */
   const [selectedTracks, setSelectedTracks] = useState([]);
 
   useEffect(() => {
@@ -163,7 +163,7 @@ function App() {
   const appStates = [
     { number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A' },
     { number: 2, title: 'Select', view: 'trackList', buttons: 'config_B' },
-    { number: 3, title: 'Playlist', view: 'trackList2', buttons: 'config_C' },
+    { number: 3, title: 'Playlist', view: 'playlist', buttons: 'config_C' },
     {
       number: 4,
       title: 'Save on Spotify',

@@ -23,9 +23,9 @@ function MainView(props) {
             onSelectedTrack={props.onSelectedTrack}
             selectedTracks={props.selectedTracks}
           />
+        )}
         {props.appState.view === 'playlist' && (
           <Playlist
-            trackList={props.trackList}
             onSelectedTrack={props.onSelectedTrack}
             selectedTracks={props.selectedTracks}
           />

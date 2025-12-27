@@ -1,0 +1,31 @@
+.trackContainer {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  height: max-content;
+  align-items: center;
+  border: solid 1px var(--color-secondary);
+  padding: 0.3rem;
+  border-radius: var(--border-radius);
+}
+
+.isSelected {
+  background-color: var(--color-secondary);
+}
+
+.trackImg {
+  height: 50px;
+  width: 50px;
+}
+
+.trackInfo {
+  display: flex;
+  gap: 0.3rem;
+  flex-direction: column;
+}
+
+.trackInfo h2,
+.trackInfo p {
+  margin: 0;
+  padding: 0;
+}
