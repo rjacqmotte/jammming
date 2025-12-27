@@ -2,6 +2,7 @@ import styles from './MainView.module.css';
 import Menu from '../Menu/Menu';
 import SearchBar from '../SearchBar/SearchBar';
 import TrackList from '../TrackList/TrackList';
+import Playlist from '../Playlist/Playlist';
 import SaveForm from '../SaveForm/SaveForm';
 
 function MainView(props) {
@@ -18,6 +19,12 @@ function MainView(props) {
         )}
         {props.appState.view === 'trackList' && (
           <TrackList
+            trackList={props.trackList}
+            onSelectedTrack={props.onSelectedTrack}
+            selectedTracks={props.selectedTracks}
+          />
+        {props.appState.view === 'playlist' && (
+          <Playlist
             trackList={props.trackList}
             onSelectedTrack={props.onSelectedTrack}
             selectedTracks={props.selectedTracks}
