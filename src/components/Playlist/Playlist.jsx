@@ -1,5 +1,6 @@
 import styles from './Playlist.module.css';
 import Track from '../Track/Track';
+import Button from '../ui/Button'
 
 function Playlist(props) {
   return (
@@ -15,6 +16,7 @@ function Playlist(props) {
           </li>
         ))}
       </ul>
+      <button>Enregistrer la playlist</button>
     </div>
   );
 }

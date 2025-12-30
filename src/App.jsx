@@ -5,13 +5,15 @@ import './variables.css';
 import CryptoJS from 'crypto-js';
 
 function App() {
-  /* --- gestion de l'API --- */
+  /* --- API --- */
+
+  // --- LAST.FM AUTHENTICATION FLOW ---
+
   // Méthode de hachage MD5 nécessaire pour signer l'authentification Last.fm
   function calculateMD5(text) {
     return CryptoJS.MD5(text).toString();
   }
 
-  // --- LAST.FM AUTHENTICATION FLOW ---
   // Créer une session Last.fm avec le token reçu
   async function createLastfmSession(token, apiKey, secret, apiUrl) {
     try {
@@ -87,21 +89,11 @@ function App() {
     }
   }, []);
 
-  // --- SEARCH ---
-
-  // search value
-  const [searchValue, setSearchValue] = useState(null);
-
-  function handleSearchChange(e) {
-    setSearchValue(e.target.value);
-  }
-
-  // api
-  
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
   const [trackList, setTrackList] = useState(null);
 
+  // construit l'url pour une demande API de recherche de morceau sur base de la valeur input de l'utilisatuer 'searchValue'
   async function handleSearch(event) {
     event.preventDefault(null);
     console.log('button search cliqué');
@@ -129,8 +121,52 @@ function App() {
     }
   }
 
+  // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
+
+  async function handleSavePlaylist(event, artist, track, tags) {
+    event.preventDefault();
+
+    const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+    const sk = null;
+    const apiURL = 'http://ws.audioscrobbler.com/2.0/';
+
+    // appel API POST pour tagger les morceau de musique enregistrée dans 'selectedTrack' dans le compte lastFM de l'utilisateur. (il n'y a pas de possibilité de faire de playlist)
+    async function saveTags(artist, track, tags, apiKey, sessionKey, apiURL) {
+      
+      // ... ici  => insérer un try ... catch
+      
+      //construction de la signature
+      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagstrack${tags}sk${sessionKey}track${track}`;
+      const apiSignature = calculateMD5(stringToHash);
+      console.log('Signature done: ');
+      console.log(apiSignature);
+
+      //construcion de l'url
+      const urlToFetch = `${apiURL}?method=track.addTags&artist=${artist}&track=${track}&tags=${tags}&api_key=${apiKey}&api_sig=${apiSignature}&sk=${sessionKey}&format=json`;
+      console.log(`url envoyée: ${urlToFetch}`);
+
+      // POST request
+      const response = await fetch(urlToFetch, { method: 'POST' });
+      console.log(response);
+      const confirmation = await response.json();
+      console.log(confirmation);
+
+      // ... ici => gestion des erreur if(confirmation.error) {...}; if(confirmartion.status === 'ok')
+
+    }
+  }
+
+  // --- SEARCH ---
+
+  // gérer le input de la barre de recherche des morceaus de chanson dans SearchBar.jsx
+  const [searchValue, setSearchValue] = useState(null);
+
+  function handleSearchChange(e) {
+    setSearchValue(e.target.value);
+  }
+
   // --- SELECTION ET SAUVEGARDE DES TRACKS ---
-  
+
   /** variable pour sauver les tracks sélectionnées. array d'objet 'track'.
    *  - enregistre les tracks sélectionnées sur base des recherches
    *  - références pour les styles css de Track et Button */
