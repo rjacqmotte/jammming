@@ -47,7 +47,6 @@ function App() {
       }
     } catch (error) {
       console.error('Erreur lors de la création de la session:', error);
-      return false;
     }
   }
 
@@ -134,7 +133,7 @@ function App() {
     async function saveTags(artist, track, tags, apiKey, sessionKey, apiURL) {
       
       // ... ici  => insérer un try ... catch
-      
+      try {
       //construction de la signature
       const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagstrack${tags}sk${sessionKey}track${track}`;
       const apiSignature = calculateMD5(stringToHash);
@@ -146,13 +145,37 @@ function App() {
       console.log(`url envoyée: ${urlToFetch}`);
 
       // POST request
+
+      // Etape 1 : Objet response natif
       const response = await fetch(urlToFetch, { method: 'POST' });
       console.log(response);
+      
+      // etape 2 : vérifier le HTTP (réseau, serveur, etc.)
+      if(!response.ok) {
+        throw new Error(`Erreur réseau: ${response.status}`);
+      }
+
+      // étape 3 : Parser le JSON => objet JS normal
       const confirmation = await response.json();
       console.log(confirmation);
 
-      // ... ici => gestion des erreur if(confirmation.error) {...}; if(confirmartion.status === 'ok')
+      // étape 4 : vérifier la logique Last.FM
+      if (confirmation.error) {
+        // confirmation.error est juste un nombre (10, 4, 6, etc.)
+        // confirmation.message est juste un string
+        throw new Error(`Last.fm : ${confirmation.error} ${confirmation.message}`);  
+      }
 
+      // étape 5 : Succés !
+      if (confirmation.status === 'ok') {
+        console.log('Tags sauvegardés!');
+      }
+
+      } catch(error) {
+        console.log('Echec:', error.message);
+        // on relance l'erreur pour qu'elle puisse être gérée plus haut
+        throw error;
+      }
     }
   }
 
