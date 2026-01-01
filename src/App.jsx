@@ -90,11 +90,11 @@ function App() {
 
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
-  const [trackList, setTrackList] = useState(null);
+  const [trackList, setTrackList] = useState();
 
   // construit l'url pour une demande API de recherche de morceau sur base de la valeur input de l'utilisatuer 'searchValue'
   async function handleSearch(event) {
-    event.preventDefault(null);
+    event.preventDefault();
     console.log('button search cliqué');
 
     // construction de l'url
@@ -122,7 +122,7 @@ function App() {
 
   // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
 
-  async function handleSavePlaylist(event, playlist, tags = 'my_playlist') {
+  async function handleTagPlaylist(event, playlist, tags = 'my_playlist') {
     event.preventDefault();
     console.log('bouton - enregistrer la playlist - cliqué!');
     // boucle d'appel api, un appel pour chaque track de la playlist
@@ -131,7 +131,6 @@ function App() {
       console.log(`track sauvegardée`);
       console.log(track);
     }
-    
   }
   // appel API POST pour tagger les morceau de musique enregistrée dans 'selectedTrack' dans le compte lastFM de l'utilisateur. (il n'y a pas de possibilité de faire de playlist)
   async function saveTags(artist, trackName, tags) {
@@ -142,7 +141,7 @@ function App() {
       //construction de la signature
       const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagssk${sessionKey}tags${tags}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
       const apiSignature = calculateMD5(stringToHash);
-      console.log('Signature créée:', apiSignature);
+      console.log('Signature créée pour saveTags:', apiSignature);
 
       // Construction du body en application/x-www-form-urlencoded
       const params = new URLSearchParams({
@@ -153,7 +152,7 @@ function App() {
         api_key: apiKey,
         api_sig: apiSignature,
         sk: sessionKey,
-        format: 'json'
+        format: 'json',
       });
 
       console.log('Body envoyé:', params.toString());
@@ -164,16 +163,17 @@ function App() {
       const response = await fetch(apiURL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: params.toString()
+        body: params.toString(),
       });
       console.log(response);
 
       // etape 2 : vérifier le HTTP (réseau, serveur, etc.)
       if (!response.ok) {
-        throw new Error(`Erreur réseau: ${response.status} - ${response.statusText}`);
-
+        throw new Error(
+          `Erreur réseau: ${response.status} - ${response.statusText}`
+        );
       }
 
       // étape 3 : Parser le JSON => objet JS normal
@@ -195,16 +195,84 @@ function App() {
         console.log('Tags sauvegardés!');
       }
     } catch (error) {
-      console.log('Echec:', error.message);
-      // on relance l'erreur pour qu'elle puisse être gérée plus haut
-      throw error;
+        console.log('Echec:', error.message);
+        // on relance l'erreur pour qu'elle puisse être gérée plus haut
+        throw error;
+    }
+  }
+
+  // appel API POST pour liker les morceau selectionnés dans 'selectedTrack'
+  async function likeTrack(trackName, artist) {
+    const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+    const sessionKey = localStorage.getItem('lastfm_session_key');
+    const apiURL = 'http://ws.audioscrobbler.com/2.0/';
+
+    try {
+      // construction de la signature
+      /**  api_key, artist, (api_sig), method, sk, track + clientsecret */
+      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.lovesk${sessoinKey}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
+      const apiSignature = calculateMD5(stringToHash);
+      console.log(`Signature crée pour likeTrack: ${apiSignature}`);
+
+      // construction du body en application/x-www-form-urlencoded
+      const params = new URLSearchParams({
+        method: 'track.love',
+        artist: artist,
+        api_key: apiKey,
+        api_sig: apiSignature,
+        sk: sessionKey,
+        format: 'json'
+      });
+
+      console.log(params.toString());
+
+      // POST resquest avec le body
+      // étape 1: Objet response natif
+      const response = await fetch(apiURL, {
+        method: 'POST',
+        headers: {
+          'content-Type' : 'application/x-www-form-urlencoded',
+        },
+        body : params.toString(),
+      });
+
+      console.log(response);
+
+      // étape 2: vérifier le HTTP (réseau, serveur, etc.)
+      if (!response.ok) {
+        throw new Error(
+          `Erreur réseau: ${response.status} - ${response.statusText}`
+        );
+      }
+
+      // étape 3: Parser le JSON => objet JS normal
+      const confirmation = await response.json();
+      console.log('la variable confirmation vaut : ');
+      console.log(confirmation);
+
+      // étape 4: vérifier la logique last FM
+      if (confirmation.error) {
+        throw new Error(
+          `Last.fm api error : ${confirmation.error} ${confirmation.message}`
+        );
+      }
+
+      // étape 5: succès!
+      if (confirmation.status === 'ok') {
+        console.log('Les tracks ont été liké.')
+      }
+      
+    } catch (error) {
+        console.log(`Echec: ${error.message}`);
+        // on relance l'erreur pour qu'elle puisse être traiter plus haut
+        throw error;
     }
   }
 
   // --- SEARCH ---
 
   // gérer le input de la barre de recherche des morceaus de chanson dans SearchBar.jsx
-  const [searchValue, setSearchValue] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
 
   function handleSearchChange(e) {
     setSearchValue(e.target.value);
@@ -279,7 +347,7 @@ function App() {
         trackList={trackList}
         onSelectedTrack={handleSelectedTrack}
         selectedTracks={selectedTracks}
-        onSavePlaylist={handleSavePlaylist}
+        onTagPlaylist={handleTagPlaylist}
       />
     </>
   );

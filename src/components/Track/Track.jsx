@@ -27,7 +27,7 @@ function Track(props) {
     <div className= {config.className}>
       <img
         className={styles.trackImg}
-        src={props.track.image[0]['#text']}
+        src={props.track.image[0]['#text'] === '' ? null : props.track.image[0]['#text']}
         alt="track image"
       />
       <article className={styles.trackInfo}>

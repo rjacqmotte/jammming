@@ -28,7 +28,7 @@ function MainView(props) {
           <Playlist
             onSelectedTrack={props.onSelectedTrack}
             selectedTracks={props.selectedTracks}
-            onSavePlaylist={props.onSavePlaylist}
+            onTagPlaylist={props.onTagPlaylist}
           />
         )}
         {props.appState.view === 'saveForm' && (
