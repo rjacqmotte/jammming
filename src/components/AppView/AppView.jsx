@@ -18,6 +18,7 @@ function AppView(props) {
           onSelectedTrack={props.onSelectedTrack}
           selectedTracks={props.selectedTracks}
           onTagPlaylist={props.onTagPlaylist}
+          onLikePlaylist={props.onLikePlaylist}
         />
         <NavButtons
           config={props.appState.buttons}

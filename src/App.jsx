@@ -201,6 +201,17 @@ function App() {
     }
   }
 
+  // like les tracks enregistré sur la session utilisateur lastFM
+  async function handleLikePlaylist(event, playlist) {
+    event.preventDefault();
+
+    for (const track of playlist) {
+      await likeTrack(track.name, track.artist);
+      console.log('track likée:');
+      console.log(track);
+    }
+  }
+
   // appel API POST pour liker les morceau selectionnés dans 'selectedTrack'
   async function likeTrack(trackName, artist) {
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
@@ -210,13 +221,14 @@ function App() {
     try {
       // construction de la signature
       /**  api_key, artist, (api_sig), method, sk, track + clientsecret */
-      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.lovesk${sessoinKey}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
+      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.lovesk${sessionKey}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
       const apiSignature = calculateMD5(stringToHash);
       console.log(`Signature crée pour likeTrack: ${apiSignature}`);
 
       // construction du body en application/x-www-form-urlencoded
       const params = new URLSearchParams({
         method: 'track.love',
+        track: trackName,
         artist: artist,
         api_key: apiKey,
         api_sig: apiSignature,
@@ -238,17 +250,18 @@ function App() {
 
       console.log(response);
 
+      // étape 3: Parser le JSON => objet JS normal
+      // check for the response body in case of error
+      const confirmation = await response.json(); // Parse even on error to get details
+      console.log('la variable confirmation vaut : ');
+      console.log(confirmation); // Log the response to see error details
+      
       // étape 2: vérifier le HTTP (réseau, serveur, etc.)
       if (!response.ok) {
         throw new Error(
           `Erreur réseau: ${response.status} - ${response.statusText}`
         );
       }
-
-      // étape 3: Parser le JSON => objet JS normal
-      const confirmation = await response.json();
-      console.log('la variable confirmation vaut : ');
-      console.log(confirmation);
 
       // étape 4: vérifier la logique last FM
       if (confirmation.error) {
@@ -348,6 +361,7 @@ function App() {
         onSelectedTrack={handleSelectedTrack}
         selectedTracks={selectedTracks}
         onTagPlaylist={handleTagPlaylist}
+        onLikePlaylist={handleLikePlaylist}
       />
     </>
   );

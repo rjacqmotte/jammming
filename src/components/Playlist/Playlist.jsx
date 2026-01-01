@@ -16,7 +16,8 @@ function Playlist(props) {
           </li>
         ))}
       </ul>
-      <button onClick={(e) => props.onTagPlaylist(e, props.selectedTracks)}>Enregistrer la playlist</button>
+      <button onClick={(e) => props.onTagPlaylist(e, props.selectedTracks)}>Tagger la playlist</button>
+      <button onClick={(e) => props.onLikePlaylist(e, props.selectedTracks)}>Liker la playlist</button>
     </div>
   );
 }
