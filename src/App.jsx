@@ -122,26 +122,31 @@ function App() {
 
   // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
 
-  async function handleSavePlaylist(event, artist, track, tags) {
+  async function handleSavePlaylist(event, playlist, tags = 'my_playlist') {
     event.preventDefault();
 
+    // boucle d'appel api, un appel pour chaque track de la playlist
+    for (track in playlist) {
+      await saveTags(track.artist, track.trackName, tags);
+      console.log(`track ${index} save`);
+      console.log(track);
+    }
+    
+  }
+  // appel API POST pour tagger les morceau de musique enregistrée dans 'selectedTrack' dans le compte lastFM de l'utilisateur. (il n'y a pas de possibilité de faire de playlist)
+  async function saveTags(artist, trackName, tags) {
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-    const sk = null;
+    const sessionKey = localStorage.getItem('lastfm_session_key');
     const apiURL = 'http://ws.audioscrobbler.com/2.0/';
-
-    // appel API POST pour tagger les morceau de musique enregistrée dans 'selectedTrack' dans le compte lastFM de l'utilisateur. (il n'y a pas de possibilité de faire de playlist)
-    async function saveTags(artist, track, tags, apiKey, sessionKey, apiURL) {
-      
-      // ... ici  => insérer un try ... catch
-      try {
+    try {
       //construction de la signature
-      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagstrack${tags}sk${sessionKey}track${track}`;
+      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagstrack${tags}sk${sessionKey}track${trackName}`;
       const apiSignature = calculateMD5(stringToHash);
       console.log('Signature done: ');
       console.log(apiSignature);
 
       //construcion de l'url
-      const urlToFetch = `${apiURL}?method=track.addTags&artist=${artist}&track=${track}&tags=${tags}&api_key=${apiKey}&api_sig=${apiSignature}&sk=${sessionKey}&format=json`;
+      const urlToFetch = `${apiURL}?method=track.addTags&artist=${artist}&track=${trackName}&tags=${tags}&api_key=${apiKey}&api_sig=${apiSignature}&sk=${sessionKey}&format=json`;
       console.log(`url envoyée: ${urlToFetch}`);
 
       // POST request
@@ -149,9 +154,9 @@ function App() {
       // Etape 1 : Objet response natif
       const response = await fetch(urlToFetch, { method: 'POST' });
       console.log(response);
-      
+
       // etape 2 : vérifier le HTTP (réseau, serveur, etc.)
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error(`Erreur réseau: ${response.status}`);
       }
 
@@ -163,19 +168,19 @@ function App() {
       if (confirmation.error) {
         // confirmation.error est juste un nombre (10, 4, 6, etc.)
         // confirmation.message est juste un string
-        throw new Error(`Last.fm : ${confirmation.error} ${confirmation.message}`);  
+        throw new Error(
+          `Last.fm : ${confirmation.error} ${confirmation.message}`
+        );
       }
 
       // étape 5 : Succés !
       if (confirmation.status === 'ok') {
         console.log('Tags sauvegardés!');
       }
-
-      } catch(error) {
-        console.log('Echec:', error.message);
-        // on relance l'erreur pour qu'elle puisse être gérée plus haut
-        throw error;
-      }
+    } catch (error) {
+      console.log('Echec:', error.message);
+      // on relance l'erreur pour qu'elle puisse être gérée plus haut
+      throw error;
     }
   }
 
