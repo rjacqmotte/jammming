@@ -140,28 +140,45 @@ function App() {
     const apiURL = 'http://ws.audioscrobbler.com/2.0/';
     try {
       //construction de la signature
-      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagstrack${tags}sk${sessionKey}track${trackName}`;
+      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.addTagssk${sessionKey}tags${tags}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
       const apiSignature = calculateMD5(stringToHash);
-      console.log('Signature done: ');
-      console.log(apiSignature);
+      console.log('Signature créée:', apiSignature);
 
-      //construcion de l'url
-      const urlToFetch = `${apiURL}?method=track.addTags&artist=${artist}&track=${trackName}&tags=${tags}&api_key=${apiKey}&api_sig=${apiSignature}&sk=${sessionKey}&format=json`;
-      console.log(`url envoyée: ${urlToFetch}`);
+      // Construction du body en application/x-www-form-urlencoded
+      const params = new URLSearchParams({
+        method: 'track.addTags',
+        artist: artist,
+        track: trackName,
+        tags: tags,
+        api_key: apiKey,
+        api_sig: apiSignature,
+        sk: sessionKey,
+        format: 'json'
+      });
 
-      // POST request
+      console.log('Body envoyé:', params.toString());
+
+      // POST request avec le body
 
       // Etape 1 : Objet response natif
-      const response = await fetch(urlToFetch, { method: 'POST' });
+      const response = await fetch(apiURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.toString()
+      });
       console.log(response);
 
       // etape 2 : vérifier le HTTP (réseau, serveur, etc.)
       if (!response.ok) {
-        throw new Error(`Erreur réseau: ${response.status}`);
+        throw new Error(`Erreur réseau: ${response.status} - ${response.statusText}`);
+
       }
 
       // étape 3 : Parser le JSON => objet JS normal
       const confirmation = await response.json();
+      console.log(`la variable confirmation vaut : `);
       console.log(confirmation);
 
       // étape 4 : vérifier la logique Last.FM
