@@ -124,11 +124,11 @@ function App() {
 
   async function handleSavePlaylist(event, playlist, tags = 'my_playlist') {
     event.preventDefault();
-
+    console.log('bouton - enregistrer la playlist - cliqué!');
     // boucle d'appel api, un appel pour chaque track de la playlist
-    for (track in playlist) {
-      await saveTags(track.artist, track.trackName, tags);
-      console.log(`track ${index} save`);
+    for (const track of playlist) {
+      await saveTags(track.artist, track.name, tags);
+      console.log(`track sauvegardée`);
       console.log(track);
     }
     
@@ -262,6 +262,7 @@ function App() {
         trackList={trackList}
         onSelectedTrack={handleSelectedTrack}
         selectedTracks={selectedTracks}
+        onSavePlaylist={handleSavePlaylist}
       />
     </>
   );

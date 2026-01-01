@@ -16,7 +16,7 @@ function Playlist(props) {
           </li>
         ))}
       </ul>
-      <button>Enregistrer la playlist</button>
+      <button onClick={(e) => props.onSavePlaylist(e, props.selectedTracks)}>Enregistrer la playlist</button>
     </div>
   );
 }
