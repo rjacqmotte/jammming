@@ -330,7 +330,7 @@ function App() {
     { view: 'saveForm'},
   ];
 
-  const [indexState, setIndexState] = useState(0);
+  const [indexState, setIndexState] = useState(1);
 
   function nextState() {
     setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));

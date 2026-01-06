@@ -1,6 +1,6 @@
 .AppView {
   height: 100%;
-  margin: 0 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;

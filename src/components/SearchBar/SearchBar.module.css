@@ -1,10 +1,22 @@
-.searchBar {
+.searchContainer {
   width: 100%;
-  margin-top: 150px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.searchTitle {
+  color: var(--color-secondary);
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
 }
 
 .searchBar input {
