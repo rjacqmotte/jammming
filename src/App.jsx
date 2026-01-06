@@ -323,15 +323,11 @@ function App() {
   // --- GESTION DE L'APPLICATION ---
   /* gestion de l'état de l'application*/
   const appStates = [
-    { number: 1, title: 'Search', view: 'searchBar', buttons: 'config_A' },
-    { number: 2, title: 'Select', view: 'trackList', buttons: 'config_B' },
-    { number: 3, title: 'Playlist', view: 'playlist', buttons: 'config_C' },
-    {
-      number: 4,
-      title: 'Save on Spotify',
-      view: 'saveForm',
-      buttons: 'config_D',
-    },
+    { view: 'connect'},
+    { view: 'searchBar'},
+    { view: 'trackList'},
+    { view: 'playlist'},
+    { view: 'saveForm'},
   ];
 
   const [indexState, setIndexState] = useState(0);
