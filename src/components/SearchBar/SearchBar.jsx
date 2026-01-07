@@ -3,7 +3,7 @@ import styles from './SearchBar.module.css';
 function SearchBar(props) {
   return (
     <div className={styles.searchContainer}>
-      <h2>Search</h2>
+      <h2 className={styles.searchTitle}>Find a song for your playlist</h2>
       <form className={styles.searchBar} onSubmit={props.onSearch}>
         <input
           id="searchBar"
