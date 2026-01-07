@@ -7,11 +7,6 @@ const BUTTON_CONFIG = {
     content: 'V',
     className: `${styles.trackButtonAdd} ${styles.trackButtonSelected}`,
   },
-  logOut: { 
-    content: 'log out', 
-    className: styles.logButton
-  },
-  logIn
 };
 
 function Button(props) {

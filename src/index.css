@@ -61,7 +61,7 @@ input::placeholder {
 
 button {
   border-radius: var(--border-radius);
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;

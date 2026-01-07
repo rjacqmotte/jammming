@@ -1,0 +1,27 @@
+/* -- filledButton -- */
+.filledButton {
+  padding: 1rem 2rem;
+}
+
+/* -- tonalButton -- */
+.tonalButton {
+  padding: 1rem 2rem;
+  background-color: var(--color-secondary);
+  color: var(--color-tertary);
+}
+/* -- textButton -- */
+.textButton {
+  font-weight: 600;
+  color: var(--color-tertary);
+  background-color: transparent;
+}
+
+.textButton:hover {
+    background-color: transparent;
+    color: var(--color-text);
+}
+
+.textButton:hover {
+  font-size: 1.2em;
+  transform: translate(0, -10%);
+}
