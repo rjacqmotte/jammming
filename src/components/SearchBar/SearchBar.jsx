@@ -13,8 +13,7 @@ function SearchBar(props) {
           value={props.searchValue}
           placeholder="cherche une chanson pour ta playlist"
         ></input>
-        <Button2 style={ 'text' } content={ 'Search' } type={ 'submit' } />
-        <button type="submit">Search</button>
+        <Button2 style={ 'filled' } content={ 'Search' } type={ 'submit' } />
       </form>
     </div>
   );
