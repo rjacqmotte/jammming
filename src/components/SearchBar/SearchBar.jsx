@@ -13,8 +13,9 @@ function SearchBar(props) {
           value={props.searchValue}
           placeholder="cherche une chanson pour ta playlist"
         ></input>
-        <Button2 style={ 'filled' } content={ 'Search' } type={ 'submit' } />
+        <Button2 style='filled' content='Search' type='submit'/>
       </form>
+      <Button2 className={styles.buttonShowLastResults} style='text' content='Show last results' />
     </div>
   );
 }

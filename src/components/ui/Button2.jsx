@@ -11,7 +11,7 @@ function Button2(props) {
         handleClick: props.handleClick,
     };
     
-    if(props.style) {config.className = BTN_CONFIG_CLASS[props.style]};
+    if(props.style) {config.class = BTN_CONFIG_CLASS[props.style]};
     if(props.type) {config.type = props.type}; 
 
     console.log(config);
@@ -19,7 +19,7 @@ function Button2(props) {
     return (
         <button 
             type={config.type}
-            className={config.className}
+            className={config.class}
             onClick={config.handleClick}
         >
             {config.content}

@@ -28,3 +28,9 @@
   height: 1.5rem;
 }
 
+.buttonShowLastResults {
+  align-self: flex-end;
+  width: fit-content;
+  background-color: blueviolet;
+}
+
