@@ -330,8 +330,12 @@ function App() {
   function previousState() {
     setIndexState((prev) => Math.max(prev - 1, 0));
   }
+
+  function newSearch() {
+    setIndexState(1);
+  }
   
-  const handleClickNavButtons = [nextState, previousState];
+  const handleClickNavButtons = [nextState, previousState, newSearch];
   
   /* gestion de l'état de l'application*/
   const appStates = [

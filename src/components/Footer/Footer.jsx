@@ -17,17 +17,20 @@ const FOOTER_CONFIG = {
         buttons: [
             {        
                 content: 'Make another search',
-                onClick: 'previousState',
-            }
+                onClick: 'newSearch',
+            },
         ],
     },
     playlist: {
-        classVariant: styles.justifyStart,
+        classVariant: styles.justifyBetween,
         buttons: [
             {        
                 content: 'Back',
                 onClick: 'previousState',
-            }
+            }, {        
+                content: 'Make another search',
+                onClick: 'newSearch',
+            },
         ],
     },
     saveForm: {},
@@ -36,6 +39,11 @@ const FOOTER_CONFIG = {
 
 function Footer(props) {
     const config = FOOTER_CONFIG[props.appState.view];
+    const clickHandlers = {
+        nextState: props.onClickNavButtons[0], 
+        previousState: props.onClickNavButtons[1], 
+        newSearch: props.onClickNavButtons[2], 
+    };
 
     console.log('dans Footer,');
     console.log('props.appState vaut:');
@@ -57,9 +65,7 @@ function Footer(props) {
               key={index}
               style='text'
               content={button.content}
-              handleClick={
-                  button.onClick === 'nextState' ? props.onClickNavButtons[0] : props.onClickNavButtons[1]
-              } 
+              handleClick={clickHandlers[button.onClick]}
             />
           ))}
         </footer>

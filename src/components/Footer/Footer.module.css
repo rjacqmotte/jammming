@@ -12,3 +12,7 @@
 .justifyStart {
     justify-content: flex-start;
 }
+
+.justifyBetween {
+    justify-content: space-between;
+}
