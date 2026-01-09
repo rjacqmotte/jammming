@@ -321,6 +321,18 @@ function App() {
   }
 
   // --- GESTION DE L'APPLICATION ---
+  
+  const [indexState, setIndexState] = useState(1);
+  
+  function nextState() {
+    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
+  }
+  function previousState() {
+    setIndexState((prev) => Math.max(prev - 1, 0));
+  }
+  
+  const handleClickNavButtons = [nextState, previousState];
+  
   /* gestion de l'état de l'application*/
   const appStates = [
     { view: 'connect'},
@@ -329,20 +341,10 @@ function App() {
     { view: 'playlist'},
     { view: 'saveForm'},
   ];
-
-  const [indexState, setIndexState] = useState(1);
-
-  function nextState() {
-    setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
-  }
-  function previousState() {
-    setIndexState((prev) => Math.max(prev - 1, 0));
-  }
-
-  const handleClickNavButtons = [nextState, previousState];
-
   // On dérive l’état courant à partir de l’index
   const appState = appStates[indexState];
+  console.log('la variable appState vaut :');
+  console.log(appState);
 
   return (
     <>

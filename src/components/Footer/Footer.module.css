@@ -8,3 +8,7 @@
 .justifyEnd {
     justify-content: flex-end;
 }
+
+.justifyStart {
+    justify-content: flex-start;
+}

@@ -20,6 +20,7 @@ function MainView(props) {
             trackList={props.trackList}
             onSelectedTrack={props.onSelectedTrack}
             selectedTracks={props.selectedTracks}
+            onClickNavButtons={props.onClickNavButtons}
           />
         )}
         {props.appState.view === 'playlist' && (

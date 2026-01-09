@@ -1,5 +1,6 @@
 import styles from './TrackList.module.css';
 import Track from '../Track/Track';
+import Button2 from '../ui/Button2';
 
 function TrackList(props) {
   return (
@@ -15,6 +16,11 @@ function TrackList(props) {
           </li>
         ))}
       </ul>
+      <Button2 
+        style='filled'
+        content='Manage Playlist' 
+        handleClick={props.onClickNavButtons?.[0]}
+      />
     </div>
   );
 }

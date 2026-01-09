@@ -12,6 +12,7 @@ function AppView(props) {
         <MainView
           appState={props.appState}
           onClickConnectButton={props.onClickConnectButton}
+          onClickNavButtons={props.onClickNavButtons}
           onSearch={props.onSearch}
           onSearchChange={props.onSearchChange}
           searchValue={props.searchValue}
@@ -21,7 +22,7 @@ function AppView(props) {
           onTagPlaylist={props.onTagPlaylist}
           onLikePlaylist={props.onLikePlaylist}
         />
-        <Footer/>
+        <Footer appState={props.appState} onClickNavButtons={props.onClickNavButtons}/>
       </div>
     </>
   );
