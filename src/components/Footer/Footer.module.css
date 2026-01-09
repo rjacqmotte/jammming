@@ -1,7 +1,10 @@
-.Footer {
+.footer {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
   border-top: 1px solid var(--color-secondary);
   padding: 0.4rem;
+}
+
+.justifyEnd {
+    justify-content: flex-end;
 }
