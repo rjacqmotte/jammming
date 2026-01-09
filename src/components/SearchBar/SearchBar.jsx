@@ -15,7 +15,6 @@ function SearchBar(props) {
         ></input>
         <Button2 style='filled' content='Search' type='submit'/>
       </form>
-      <Button2 className={styles.buttonShowLastResults} style='text' content='Show last results' />
     </div>
   );
 }

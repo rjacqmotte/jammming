@@ -1,6 +1,7 @@
 import styles from './AppView.module.css';
 import Header from '../Header/Header.jsx';
 import MainView from '../MainView/MainView.jsx';
+import Button2 from '../ui/Button2.jsx';
 
 function AppView(props) {
   return (
@@ -19,6 +20,9 @@ function AppView(props) {
           onTagPlaylist={props.onTagPlaylist}
           onLikePlaylist={props.onLikePlaylist}
         />
+        <footer className={styles.AppViewFooter}>
+          <Button2 className={styles.buttonShowLastResults} style='text' content='Show last results' />
+        </footer>
       </div>
     </>
   );
