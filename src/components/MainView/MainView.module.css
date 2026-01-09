@@ -15,3 +15,11 @@
   justify-content: center;
   overflow: hidden;
 }
+
+.trackList {
+  overflow: hidden;
+}
+
+.buttonsContainer {
+  flex: 1;
+}
