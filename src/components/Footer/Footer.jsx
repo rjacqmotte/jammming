@@ -5,18 +5,30 @@ const FOOTER_CONFIG = {
     connect: {},
     searchBar: { 
         classVariant: styles.justifyEnd,
-        content: ['Show last results'],
-        onClick: 'nextState',
+        buttons: [
+            {
+                content: 'Show last results',
+                onClick: 'nextState',
+            }
+        ],
     },
     trackList: {
         classVariant: styles.justifyStart,
-        content: ['Make another search'],
-        onClick: 'previousState',
+        buttons: [
+            {        
+                content: 'Make another search',
+                onClick: 'previousState',
+            }
+        ],
     },
     playlist: {
         classVariant: styles.justifyStart,
-        content: ['Make another search'],
-        onClick: 'previousState',
+        buttons: [
+            {        
+                content: 'Back',
+                onClick: 'previousState',
+            }
+        ],
     },
     saveForm: {},
 };
@@ -40,13 +52,16 @@ function Footer(props) {
     
     return (
         <footer className={`${styles.footer} ${config.classVariant}`}>
-          <Button2 
-            style='text'
-            content={config.content[0]}
-            handleClick={
-                config.onClick === 'nextState' ? props.onClickNavButtons[0] : props.onClickNavButtons[1]
-            } 
-        />
+          {config.buttons?.map((button, index) => (
+            <Button2 
+              key={index}
+              style='text'
+              content={button.content}
+              handleClick={
+                  button.onClick === 'nextState' ? props.onClickNavButtons[0] : props.onClickNavButtons[1]
+              } 
+            />
+          ))}
         </footer>
     );
 }
