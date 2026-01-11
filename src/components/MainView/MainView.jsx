@@ -2,7 +2,7 @@ import styles from './MainView.module.css';
 import SearchBar from '../SearchBar/SearchBar';
 import TrackList from '../TrackList/TrackList';
 import Playlist from '../Playlist/Playlist';
-import SaveForm from '../SaveForm/SaveForm';
+import ConnectView from '../ConnectView/ConnectView';
 
 function MainView(props) {
   return (
@@ -31,9 +31,10 @@ function MainView(props) {
             onLikePlaylist={props.onLikePlaylist}
           />
         )}
-        {props.appState.view === 'saveForm' && (
-          <SaveForm onClickConnectButton={props.onClickConnectButton} />
+        {props.appState.view === 'connect' && (
+          <ConnectView onClickConnectButton={props.onClickConnectButton}/>
         )}
+
       </div>
     </div>
   );

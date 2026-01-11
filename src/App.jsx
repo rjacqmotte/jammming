@@ -5,8 +5,8 @@ import './variables.css';
 import CryptoJS from 'crypto-js';
 
 function App() {
+  
   /* --- API --- */
-
   // --- LAST.FM AUTHENTICATION FLOW ---
 
   // Méthode de hachage MD5 nécessaire pour signer l'authentification Last.fm
@@ -88,6 +88,8 @@ function App() {
     }
   }, []);
 
+// --- API : SEARCH ---
+
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
   const [trackList, setTrackList] = useState();
@@ -120,6 +122,7 @@ function App() {
     }
   }
 
+  // --- API : TAG TRACK ---
   // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
 
   async function handleTagPlaylist(event, playlist, tags = 'my_playlist') {
@@ -201,6 +204,9 @@ function App() {
     }
   }
 
+
+
+  // --- API : LIKE TRACK ---
   // like les tracks enregistré sur la session utilisateur lastFM
   async function handleLikePlaylist(event, playlist) {
     event.preventDefault();
@@ -346,7 +352,7 @@ function App() {
     { view: 'saveForm'},
   ];
   // On dérive l’état courant à partir de l’index
-  const appState = appStates[indexState];
+  const appState = appStates[0];
   console.log('la variable appState vaut :');
   console.log(appState);
 
