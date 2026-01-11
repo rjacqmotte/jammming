@@ -1,6 +1,7 @@
 import styles from './Playlist.module.css';
 import Track from '../Track/Track';
 import Button from '../ui/Button';
+import Button2 from '../ui/Button2';
 
 function Playlist(props) {
   return (
@@ -16,13 +17,17 @@ function Playlist(props) {
           </li>
         ))}
       </ul>
-      <div className={buttonsContainer}>
-        <button onClick={(e) => props.onTagPlaylist(e, props.selectedTracks)}>
-          Tagger la playlist
-        </button>
-        <button onClick={(e) => props.onLikePlaylist(e, props.selectedTracks)}>
-          Liker la playlist
-        </button>
+      <div className={styles.buttonsContainer}>
+        <Button2 
+          style='filled' 
+          content='Tagger la playlist' 
+          handleClick={(e) => props.onTagPlaylist(e, props.selectedTracks)}
+        />
+        <Button2 
+          style='filled' 
+          content='Liker la playlist' 
+          handleClick={(e) => props.onLikePlaylist(e, props.selectedTracks)} 
+        />
       </div>
     </div>
   );

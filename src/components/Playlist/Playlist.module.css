@@ -1,12 +1,21 @@
-.trackContainer {
+.trackListContainer {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   width: 100%;
   height: max-content;
   align-items: center;
-  border: solid 1px var(--color-secondary);
   padding: 0.3rem;
   border-radius: var(--border-radius);
+}
+
+.trackList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  list-style: none;
+  padding-left: 0;
 }
 
 .isSelected {
@@ -28,4 +37,10 @@
 .trackInfo p {
   margin: 0;
   padding: 0;
+}
+
+.buttonsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }

@@ -16,11 +16,13 @@ function TrackList(props) {
           </li>
         ))}
       </ul>
-      <Button2 
-        style='filled'
-        content='Manage Playlist' 
-        handleClick={props.onClickNavButtons?.[0]}
-      />
+      <div className={styles.buttonsContainer}>
+        <Button2
+          style="filled"
+          content="Manage Playlist"
+          handleClick={props.onClickNavButtons?.[0]}
+        />
+      </div>
     </div>
   );
 }
