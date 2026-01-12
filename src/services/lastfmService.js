@@ -50,30 +50,53 @@ export function connectToLastfm() {
 export async function requestSearchTracks(searchValue) {
   // construction de l'url
   const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-  const apiURL = 'http://ws.audioscrobbler.com/2.0/';
+  const apiURL = 'https://ws.audioscrobbler.com/2.0/';
   const urlToFetch = `${apiURL}?method=track.search&track=${encodeURIComponent(searchValue)}&api_key=${apiKey}&format=json`;
 
-  // envoie de la requête
-  console.log('requête de recherche envoyée à API lastFM');
-  console.log(`url envoyée: ${urlToFetch}`);
-  const response = await fetch(urlToFetch);
-  console.log('réponse recue:');
-  console.log(response);
+  try {
+    // GET request
 
-  // récupération des données
-  const searchData = await response.json();
-  console.log('réponse parsée:');
-  console.log(searchData);
-  const tracks = searchData.results.trackmatches.track;
-  console.log('tracks reçus:');
-  console.log(tracks);
+    // Etape 1: Objet response natif
+    // envoie de la requête
+    console.log('requête de recherche envoyée à API lastFM');
+    console.log(`url envoyée: ${urlToFetch}`);
+    const response = await fetch(urlToFetch);
+    console.log('réponse du search recue:');
+    console.log(response);
 
-  if (searchData.error) {
-    console.error('Erreur Last.fm:', sessionSearch.message);
-    return false;
+    // Etape 2: vérifier le HTTP (réseau, serveur, etc.)
+    if (!response.ok) {
+      throw new Error(
+        `Erreur réseau: ${response.status} - ${response.statusText}`
+      );
+    }
+
+    // Etape 3: Parser le JSON => objet normal JS
+    // récupération des données
+    const searchData = await response.json();
+    console.log('réponse du search parsée:');
+    console.log(searchData);
+
+    // Etape 4: vérifier la logique last.FM
+    if (searchData.error) {
+      throw new Error(`Last.fm : ${searchData.error} - ${searchData.message}`);
+    }
+
+    // Etape 5: Succés!
+    // en GET, il n'y a pas de searchData.status === OK, mais juste la réponse
+    if (searchData.results?.trackmatches?.track) {
+      const tracks = searchData.results.trackmatches.track;
+      console.log('tracks correspondant au search reçus:');
+      console.log(tracks);
+      return tracks;
+    }
+
+    console.error(`Echec: ${error.message}`);
+  } catch (error) {
+    console.log(`Echec: ${error.message}`);
+    // relance erreur pour la gérer plus haut
+    throw error;
   }
-
-  return tracks;
 }
 
 // --- API : TAG TRACK ---
@@ -146,73 +169,72 @@ export async function saveTags(artist, trackName, tags) {
   }
 }
 
-
-  // --- API : LIKE TRACK ---
+// --- API : LIKE TRACK ---
 // appel API POST pour liker les morceau selectionnés dans 'selectedTrack'
-  export async function likeTrack(trackName, artist) {
-    const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-    const sessionKey = localStorage.getItem('lastfm_session_key');
-    const apiURL = 'http://ws.audioscrobbler.com/2.0/';
+export async function likeTrack(trackName, artist) {
+  const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+  const sessionKey = localStorage.getItem('lastfm_session_key');
+  const apiURL = 'http://ws.audioscrobbler.com/2.0/';
 
-    try {
-      // construction de la signature
-      /**  api_key, artist, (api_sig), method, sk, track + clientsecret */
-      const stringToHash = `api_key${apiKey}artist${artist}methodtrack.lovesk${sessionKey}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
-      const apiSignature = calculateMD5(stringToHash);
-      console.log(`Signature crée pour likeTrack: ${apiSignature}`);
+  try {
+    // construction de la signature
+    /**  api_key, artist, (api_sig), method, sk, track + clientsecret */
+    const stringToHash = `api_key${apiKey}artist${artist}methodtrack.lovesk${sessionKey}track${trackName}${import.meta.env.VITE_LASTFM_CLIENT_SECRET}`;
+    const apiSignature = calculateMD5(stringToHash);
+    console.log(`Signature crée pour likeTrack: ${apiSignature}`);
 
-      // construction du body en application/x-www-form-urlencoded
-      const params = new URLSearchParams({
-        method: 'track.love',
-        track: trackName,
-        artist: artist,
-        api_key: apiKey,
-        api_sig: apiSignature,
-        sk: sessionKey,
-        format: 'json',
-      });
+    // construction du body en application/x-www-form-urlencoded
+    const params = new URLSearchParams({
+      method: 'track.love',
+      track: trackName,
+      artist: artist,
+      api_key: apiKey,
+      api_sig: apiSignature,
+      sk: sessionKey,
+      format: 'json',
+    });
 
-      console.log(params.toString());
+    console.log(params.toString());
 
-      // POST resquest avec le body
-      // étape 1: Objet response natif
-      const response = await fetch(apiURL, {
-        method: 'POST',
-        headers: {
-          'content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: params.toString(),
-      });
+    // POST resquest avec le body
+    // étape 1: Objet response natif
+    const response = await fetch(apiURL, {
+      method: 'POST',
+      headers: {
+        'content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
 
-      console.log(response);
+    console.log(response);
 
-      // étape 3: Parser le JSON => objet JS normal
-      // check for the response body in case of error
-      const confirmation = await response.json(); // Parse even on error to get details
-      console.log('la variable confirmation vaut : ');
-      console.log(confirmation); // Log the response to see error details
+    // étape 3: Parser le JSON => objet JS normal
+    // check for the response body in case of error
+    const confirmation = await response.json(); // Parse even on error to get details
+    console.log('la variable confirmation vaut : ');
+    console.log(confirmation); // Log the response to see error details
 
-      // étape 2: vérifier le HTTP (réseau, serveur, etc.)
-      if (!response.ok) {
-        throw new Error(
-          `Erreur réseau: ${response.status} - ${response.statusText}`
-        );
-      }
-
-      // étape 4: vérifier la logique last FM
-      if (confirmation.error) {
-        throw new Error(
-          `Last.fm api error : ${confirmation.error} ${confirmation.message}`
-        );
-      }
-
-      // étape 5: succès!
-      if (confirmation.status === 'ok') {
-        console.log('Les tracks ont été liké.');
-      }
-    } catch (error) {
-      console.log(`Echec: ${error.message}`);
-      // on relance l'erreur pour qu'elle puisse être traiter plus haut
-      throw error;
+    // étape 2: vérifier le HTTP (réseau, serveur, etc.)
+    if (!response.ok) {
+      throw new Error(
+        `Erreur réseau: ${response.status} - ${response.statusText}`
+      );
     }
+
+    // étape 4: vérifier la logique last FM
+    if (confirmation.error) {
+      throw new Error(
+        `Last.fm api error : ${confirmation.error} ${confirmation.message}`
+      );
+    }
+
+    // étape 5: succès!
+    if (confirmation.status === 'ok') {
+      console.log('Les tracks ont été liké.');
+    }
+  } catch (error) {
+    console.log(`Echec: ${error.message}`);
+    // on relance l'erreur pour qu'elle puisse être traiter plus haut
+    throw error;
   }
+}

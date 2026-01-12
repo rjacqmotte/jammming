@@ -9,6 +9,8 @@ import {
   likeTrack,
 } from './services/lastfmService.js';
 
+
+
 function App() {
   
   // --- AUTHENTIFICATION ---
