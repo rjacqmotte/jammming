@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
 import {
@@ -8,6 +8,7 @@ import {
   saveTags,
   likeTrack,
 } from './services/lastfmService.js';
+import { useCallbackLastfm } from './hooks/useCallbackLastfm.js';
 
 
 
@@ -21,33 +22,9 @@ function App() {
     connectToLastfm();
   }
 
-  /* Ecoute l'url de callback pour capturer le token et créer une session lastFM */
-  useEffect(() => {
-    // Vérifier si on est sur /callback avec un token
-    if (window.location.pathname === '/callback') {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get('token');
-
-      if (token) {
-        console.log('Token Last.fm reçu:', token);
-        localStorage.setItem('lastfm_token', token);
-
-        // Nettoyer l'URL et revenir à la page principale
-        window.history.replaceState({}, '', '/');
-
-        // Créer la session Last.fm avec ce token
-        const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-        const secret = import.meta.env.VITE_LASTFM_CLIENT_SECRET;
-        const apiUrl = import.meta.env.VITE_API_URL;
-
-        // Appel simple et lisible de la fonction async
-        createLastfmSession(token, apiKey, secret, apiUrl);
-      }
-    }
-  }, []);
-
-  
-  
+  /* Ecoute l'url de callback pour capturer 
+  le token et créer une session lastFM */
+  useCallbackLastfm();
   
   // --- SEARCH ---
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
@@ -157,7 +134,7 @@ function App() {
   ];
 
   // On dérive l’état courant à partir de l’index
-  const appState = appStates[indexState];
+  const appState = appStates[0];
   console.log('la variable appState vaut :');
   console.log(appState);
 
