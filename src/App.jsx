@@ -66,7 +66,7 @@ function App() {
     window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
   }
 
-  /* Ecoute l'url de callback pour capturer le token */
+  /* Ecoute l'url de callback pour capturer le token et créer une session lastFM */
   useEffect(() => {
     // Vérifier si on est sur /callback avec un token
     if (window.location.pathname === '/callback') {
@@ -102,6 +102,13 @@ function App() {
     event.preventDefault();
     console.log('button search cliqué');
 
+    const tracks = await requestSearchTracks(searchValue);
+    setTrackList(tracks);
+    nextState();
+  }
+  
+  // appel API pour fournir une liste de tracks sur base de la valeur de la demande utilisateur
+  async function requestSearchTracks(searchValue) {  
     // construction de l'url
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
     const apiURL = 'http://ws.audioscrobbler.com/2.0/';
@@ -127,10 +134,8 @@ function App() {
       return false;
     }
 
-    setTrackList(tracks);
-    nextState();
+    return tracks;
   }
-
   // --- API : TAG TRACK ---
   // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
 
