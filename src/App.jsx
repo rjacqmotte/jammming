@@ -5,7 +5,6 @@ import './variables.css';
 import CryptoJS from 'crypto-js';
 
 function App() {
-  
   /* --- API --- */
   // --- LAST.FM AUTHENTICATION FLOW ---
 
@@ -53,13 +52,17 @@ function App() {
   /* Envoie la demande de token et renvoie le client sur la page de connection*/
   function handleConnectToLastFM(event) {
     event.preventDefault();
-    console.log(event);
     console.log('connect button clicked!!!');
-    console.log(import.meta.env.VITE_TEST);
+    connectToLastfm();
+  }
 
+
+  // redirige vers le site de last fm pour valider la connection client.
+  function connectToLastfm() {
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
     const callbackUrl = encodeURIComponent('http://localhost:5173/callback');
-
+    
+    console.log('request to connect to Lastfm. redirect to lastfm');
     window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
   }
 
@@ -88,7 +91,7 @@ function App() {
     }
   }, []);
 
-// --- API : SEARCH ---
+  // --- API : SEARCH ---
 
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
@@ -103,23 +106,29 @@ function App() {
     const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
     const apiURL = 'http://ws.audioscrobbler.com/2.0/';
     const urlToFetch = `${apiURL}?method=track.search&track=${encodeURIComponent(searchValue)}&api_key=${apiKey}&format=json`;
+    
+    // envoie de la requête
+    console.log('requête de recherche envoyée à API lastFM');
     console.log(`url envoyée: ${urlToFetch}`);
-
     const response = await fetch(urlToFetch);
+    console.log('réponse recue:');
     console.log(response);
+
+    // récupération des données
     const searchData = await response.json();
+    console.log('réponse parsée:')
     console.log(searchData);
     const tracks = searchData.results.trackmatches.track;
+    console.log('tracks reçus:')
     console.log(tracks);
-
-    setTrackList(tracks);
-
-    nextState();
 
     if (searchData.error) {
       console.error('Erreur Last.fm:', sessionSearch.message);
       return false;
     }
+
+    setTrackList(tracks);
+    nextState();
   }
 
   // --- API : TAG TRACK ---
@@ -198,13 +207,11 @@ function App() {
         console.log('Tags sauvegardés!');
       }
     } catch (error) {
-        console.log('Echec:', error.message);
-        // on relance l'erreur pour qu'elle puisse être gérée plus haut
-        throw error;
+      console.log('Echec:', error.message);
+      // on relance l'erreur pour qu'elle puisse être gérée plus haut
+      throw error;
     }
   }
-
-
 
   // --- API : LIKE TRACK ---
   // like les tracks enregistré sur la session utilisateur lastFM
@@ -239,7 +246,7 @@ function App() {
         api_key: apiKey,
         api_sig: apiSignature,
         sk: sessionKey,
-        format: 'json'
+        format: 'json',
       });
 
       console.log(params.toString());
@@ -249,9 +256,9 @@ function App() {
       const response = await fetch(apiURL, {
         method: 'POST',
         headers: {
-          'content-Type' : 'application/x-www-form-urlencoded',
+          'content-Type': 'application/x-www-form-urlencoded',
         },
-        body : params.toString(),
+        body: params.toString(),
       });
 
       console.log(response);
@@ -261,7 +268,7 @@ function App() {
       const confirmation = await response.json(); // Parse even on error to get details
       console.log('la variable confirmation vaut : ');
       console.log(confirmation); // Log the response to see error details
-      
+
       // étape 2: vérifier le HTTP (réseau, serveur, etc.)
       if (!response.ok) {
         throw new Error(
@@ -278,13 +285,12 @@ function App() {
 
       // étape 5: succès!
       if (confirmation.status === 'ok') {
-        console.log('Les tracks ont été liké.')
+        console.log('Les tracks ont été liké.');
       }
-      
     } catch (error) {
-        console.log(`Echec: ${error.message}`);
-        // on relance l'erreur pour qu'elle puisse être traiter plus haut
-        throw error;
+      console.log(`Echec: ${error.message}`);
+      // on relance l'erreur pour qu'elle puisse être traiter plus haut
+      throw error;
     }
   }
 
@@ -327,9 +333,9 @@ function App() {
   }
 
   // --- GESTION DE L'APPLICATION ---
-  
+
   const [indexState, setIndexState] = useState(1);
-  
+
   function nextState() {
     setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
   }
@@ -340,19 +346,19 @@ function App() {
   function newSearch() {
     setIndexState(1);
   }
-  
+
   const handleClickNavButtons = [nextState, previousState, newSearch];
-  
+
   /* gestion de l'état de l'application*/
   const appStates = [
-    { view: 'connect'},
-    { view: 'searchBar'},
-    { view: 'trackList'},
-    { view: 'playlist'},
-    { view: 'saveForm'},
+    { view: 'connect' },
+    { view: 'searchBar' },
+    { view: 'trackList' },
+    { view: 'playlist' },
+    { view: 'saveForm' },
   ];
   // On dérive l’état courant à partir de l’index
-  const appState = appStates[0];
+  const appState = appStates[indexState];
   console.log('la variable appState vaut :');
   console.log(appState);
 
