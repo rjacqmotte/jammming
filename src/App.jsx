@@ -6,6 +6,7 @@ import {
   requestSearchTracks,
   saveTags,
   likeTrack,
+  createLastfmSession,
 } from './services/lastfmService.js';
 import { useCallbackLastfm } from './hooks/useCallbackLastfm.js';
 
@@ -20,24 +21,12 @@ function App() {
   useEffect(() => {
     const sessionKey = localStorage.getItem('lastfm_session_key');
     const userName = localStorage.getItem('lastfm_username');
-    if ( sessionKey && userName) {
+    if (sessionKey && userName) {
       setIsLogged(true);
     } else {
       setIsLogged(false);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(
-      'l utilisateur est il connecté à lastfm au début de cette session? :'
-    );
-    console.log(isLogged);
-    if(isLogged) {
-      newSearch();
-    } else {
-      newConnection();
-    }
-  }, [isLogged]);
 
   // fonctions de connection et déconnection
   function loginLastfm() {
@@ -60,7 +49,45 @@ function App() {
 
   /* Ecoute l'url de callback pour capturer 
   le token et créer une session lastFM */
-  useCallbackLastfm();
+  useEffect(() => {
+    // Vérifier si on est sur /callback avec un token
+    if (window.location.pathname === '/callback') {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+
+      if (token) {
+        console.log('Token Last.fm reçu:', token);
+        localStorage.setItem('lastfm_token', token);
+
+        // Nettoyer l'URL et revenir à la page principale
+        window.history.replaceState({}, '', '/');
+
+        // Créer la session Last.fm avec ce token
+        const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
+        const secret = import.meta.env.VITE_LASTFM_CLIENT_SECRET;
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        // Fonction async pour créer la session avec gestion d'erreur
+        // nécessiyte une IIFE async (une fonction qui se lance de suite)
+        // pour gérer createLastfmSession qui est async. on ne peut pas mettre
+        // de async dans un useEffect
+        (async () => {
+          try {
+            let ok = false;
+            ok = await createLastfmSession(token, apiKey, secret, apiUrl);
+            if (ok) {
+              console.log('Session initialisée');
+              setIsLogged(true);
+            } else {
+              console.error('problème de connexion à lastFM');
+            }
+          } catch (error) {
+            console.error('Erreur lors de la création de session:', error);
+          }
+        })();
+      }
+    }
+  }, []);
 
   // --- SEARCH ---
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
@@ -155,10 +182,9 @@ function App() {
   // On dérive l’état courant à partir de l’index
   const appState = appStates[indexState];
   useEffect(() => {
-      console.log('la variable appState vaut :');
-  console.log(appState);
-  }, [appState])
-
+    console.log('la variable appState vaut :');
+    console.log(appState);
+  }, [appState]);
 
   // fonctions de navigation entre les états/vues de l'app
   function nextState() {
@@ -176,6 +202,16 @@ function App() {
   function newConnection() {
     setIndexState(0);
   }
+
+  // si l'utilisateur est loggé, présente la vue search, sinon la vue connect
+  useEffect(() => {
+    console.log(isLogged);
+    if (isLogged) {
+      newSearch();
+    } else {
+      newConnection();
+    }
+  }, [isLogged]);
 
   // série de fonction de navigation envoyée en props
   const handleClickNavButtons = [nextState, previousState, newSearch];
@@ -195,6 +231,7 @@ function App() {
         selectedTracks={selectedTracks}
         onTagPlaylist={handleTagPlaylist}
         onLikePlaylist={handleLikePlaylist}
+        onLogOut={logoutLastfm}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import Button2 from '../ui/Button2';
 
-function Header() {
+function Header(props) {
   return (
     <header className={styles.header}>
       <div>
@@ -9,7 +9,7 @@ function Header() {
         <p className={styles.headerSubtitle}>Playlists Maker</p>
       </div>
       <div>
-      <Button2 style="text" content="Log out" />
+      <Button2 style="text" content="Log out" handleClick={props.onLogOut} />
       <p className={styles.headerSubtitle}>LastFM</p>
       </div>
     </header>

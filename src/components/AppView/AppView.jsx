@@ -8,7 +8,7 @@ function AppView(props) {
   return (
     <>
       <div className={styles.AppView}>
-        <Header />
+        <Header onLogOut={props.onLogOut} />
         <MainView
           appState={props.appState}
           onClickConnectButton={props.onClickConnectButton}
@@ -22,7 +22,10 @@ function AppView(props) {
           onTagPlaylist={props.onTagPlaylist}
           onLikePlaylist={props.onLikePlaylist}
         />
-        <Footer appState={props.appState} onClickNavButtons={props.onClickNavButtons}/>
+        <Footer
+          appState={props.appState}
+          onClickNavButtons={props.onClickNavButtons}
+        />
       </div>
     </>
   );
