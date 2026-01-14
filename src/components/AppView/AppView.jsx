@@ -22,10 +22,10 @@ function AppView(props) {
           onTagPlaylist={props.onTagPlaylist}
           onLikePlaylist={props.onLikePlaylist}
         />
-        <Footer
+        {props.appState.view !== 'connect' && (<Footer
           appState={props.appState}
           onClickNavButtons={props.onClickNavButtons}
-        />
+        />)}
       </div>
     </>
   );

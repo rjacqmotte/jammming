@@ -28,11 +28,6 @@ function App() {
     }
   }, []);
 
-  // fonctions de connection et déconnection
-  function loginLastfm() {
-    connectToLastfm();
-  }
-
   function logoutLastfm() {
     // met isLogged = false;
     setIsLogged(false);
@@ -74,6 +69,7 @@ function App() {
         (async () => {
           try {
             let ok = false;
+            setLoading(true);
             ok = await createLastfmSession(token, apiKey, secret, apiUrl);
             if (ok) {
               console.log('Session initialisée');
@@ -81,13 +77,14 @@ function App() {
             } else {
               console.error('problème de connexion à lastFM');
             }
+            setLoading(false);
           } catch (error) {
             console.error('Erreur lors de la création de session:', error);
           }
         })();
       }
     }
-  }, []);
+  }, [setLoading, setIsLogged]);
 
   // --- SEARCH ---
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
