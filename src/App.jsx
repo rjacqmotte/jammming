@@ -2,7 +2,6 @@ import { useState, useEffect, use } from 'react';
 import AppView from './components/AppView/AppView.jsx';
 import './variables.css';
 import {
-  createLastfmSession,
   connectToLastfm,
   requestSearchTracks,
   saveTags,
@@ -10,11 +9,48 @@ import {
 } from './services/lastfmService.js';
 import { useCallbackLastfm } from './hooks/useCallbackLastfm.js';
 
-
-
 function App() {
-  
   // --- AUTHENTIFICATION ---
+  // retient l'état de connection au compte lastFm de l'utilisateur
+  const [isLogged, setIsLogged] = useState(false);
+  // état de chargeament en cours pour notifier l'utilisateur
+  const [loading, setLoading] = useState(false);
+
+  // vérifie à chaque first render si la clé de session est existante est défini isLogged
+  useEffect(() => {
+    const sessionKey = localStorage.getItem('lastfm_session_key');
+    const userName = localStorage.getItem('lastfm_username');
+    if ( sessionKey && userName) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(
+      'l utilisateur est il connecté à lastfm au début de cette session? :'
+    );
+    console.log(isLogged);
+    if(isLogged) {
+      newSearch();
+    } else {
+      newConnection();
+    }
+  }, [isLogged]);
+
+  // fonctions de connection et déconnection
+  function loginLastfm() {
+    connectToLastfm();
+  }
+
+  function logoutLastfm() {
+    // met isLogged = false;
+    setIsLogged(false);
+    // efface toutes les clés et variables de connection utilisateur
+    localStorage.clear();
+  }
+
   /* Envoie la demande de token et renvoie le client sur la page de connection*/
   function handleConnectToLastFM(event) {
     event.preventDefault();
@@ -25,44 +61,42 @@ function App() {
   /* Ecoute l'url de callback pour capturer 
   le token et créer une session lastFM */
   useCallbackLastfm();
-  
+
   // --- SEARCH ---
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
   const [trackList, setTrackList] = useState();
-  
+
   // gérer le input de la barre de recherche des morceaus de chanson dans SearchBar.jsx
   const [searchValue, setSearchValue] = useState('');
-  
+
   // synchronise la valeur du champ input
   function handleSearchChange(e) {
     setSearchValue(e.target.value);
   }
-  
-  // lance l'appe à api via requestSearchTracks au onClick 
+
+  // lance l'appe à api via requestSearchTracks au onClick
   async function handleSearch(event) {
     event.preventDefault();
     console.log('button search cliqué');
-    
+
     const tracks = await requestSearchTracks(searchValue);
     setTrackList(tracks);
     nextState();
   }
-  
-  
-  
+
   // --- SELECTION ET SAUVEGARDE DES TRACKS ---
   /** variable pour sauver les tracks sélectionnées. array d'objet 'track'.
    *  - enregistre les tracks sélectionnées sur base des recherches
    *  - références pour les styles css de Track et Button */
   const [selectedTracks, setSelectedTracks] = useState([]);
-  
+
   useEffect(() => {
     console.log(`il y a ${selectedTracks.length} sélectioné(s).`);
     console.log('selectedTracks vaut maintenant :');
     console.log(selectedTracks);
   }, [selectedTracks]);
-  
+
   // si  le track est déjà dans l'array, on l'enlève. s'il n'y est pas, on l'ajoute.
   function handleSelectedTrack(track) {
     setSelectedTracks((prev) => {
@@ -77,8 +111,6 @@ function App() {
       }
     });
   }
-  
-
 
   // --- ADD TAG ---
   // ajoute un tag dans le compte lastFM de l'utilisateur sur les morceaux enregistés dans la playlist ('selectedTrack').
@@ -92,23 +124,43 @@ function App() {
       console.log(track);
     }
   }
-  
+
   // --- LIKE TRACKS ---
   // like les tracks enregistré sur la session utilisateur lastFM
   async function handleLikePlaylist(event, playlist) {
     event.preventDefault();
-    
+
     for (const track of playlist) {
       await likeTrack(track.name, track.artist);
       console.log('track likée:');
       console.log(track);
     }
   }
-  
 
-  // --- GESTION DE L'ETAT DE L'APPLICATION ---
-  const [indexState, setIndexState] = useState(1);
+  // --- GESTION DES VUES ET DE LA NAVIGATION DE L'APPLICATION ---
+  // retient l'état de l'application et gère l'affichage des différentes vues.
+  const [indexState, setIndexState] = useState(2);
 
+  /* gestion de l'état de l'application*/
+  const appStates = [
+    { view: 'connect' },
+    { view: 'confirmLog' },
+    { view: 'searchBar' },
+    { view: 'trackList' },
+    { view: 'playlist' },
+    { view: 'saveForm' },
+    { view: 'confirmSave' },
+  ];
+
+  // On dérive l’état courant à partir de l’index
+  const appState = appStates[indexState];
+  useEffect(() => {
+      console.log('la variable appState vaut :');
+  console.log(appState);
+  }, [appState])
+
+
+  // fonctions de navigation entre les états/vues de l'app
   function nextState() {
     setIndexState((prev) => Math.min(prev + 1, appStates.length - 1));
   }
@@ -118,27 +170,15 @@ function App() {
   }
 
   function newSearch() {
-    setIndexState(1);
+    setIndexState(2);
+  }
+
+  function newConnection() {
+    setIndexState(0);
   }
 
   // série de fonction de navigation envoyée en props
   const handleClickNavButtons = [nextState, previousState, newSearch];
-
-  /* gestion de l'état de l'application*/
-  const appStates = [
-    { view: 'connect' },
-    { view: 'searchBar' },
-    { view: 'trackList' },
-    { view: 'playlist' },
-    { view: 'saveForm' },
-  ];
-
-  // On dérive l’état courant à partir de l’index
-  const appState = appStates[0];
-  console.log('la variable appState vaut :');
-  console.log(appState);
-
-
 
   // --- JSX ---
   return (

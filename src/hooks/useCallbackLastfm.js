@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createLastfmSession } from '../services/lastfmService';
 
 export function useCallbackLastfm() {
-/* Ecoute l'url de callback pour capturer le token et créer une session lastFM */
+  /* Ecoute l'url de callback pour capturer le token et créer une session lastFM */
   useEffect(() => {
     // Vérifier si on est sur /callback avec un token
     if (window.location.pathname === '/callback') {
@@ -24,14 +24,17 @@ export function useCallbackLastfm() {
         // Fonction async avec gestion d'erreur
         const initSession = async () => {
           try {
-            await createLastfmSession(token, apiKey, secret, apiUrl);
+            let ok = false;
+            ok = await createLastfmSession(token, apiKey, secret, apiUrl);
             console.log('Session initialisée');
+            return ok;
           } catch (error) {
             console.error('Erreur lors de la création de session:', error);
           }
         };
-        
-        initSession();
+
+        let ok = false;
+        ok = initSession();
       }
     }
   }, []);

@@ -29,6 +29,7 @@ export async function createLastfmSession(token, apiKey, secret, apiUrl) {
       // Sauvegarder la clé de session pour les appels futurs
       localStorage.setItem('lastfm_session_key', sessionData.session.key);
       localStorage.setItem('lastfm_username', sessionData.session.name);
+
       return true;
     }
   } catch (error) {

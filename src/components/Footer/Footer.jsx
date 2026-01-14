@@ -2,7 +2,18 @@ import styles from './Footer.module.css';
 import Button2 from '../ui/Button2';
 
 const FOOTER_CONFIG = { 
-    connect: {},
+    connect: {
+        classVariant: styles.justifyBetween,
+        buttons: [
+            {        
+                content: 'Back',
+                onClick: 'previousState',
+            }, {        
+                content: 'Make another search',
+                onClick: 'newSearch',
+            },
+        ],
+    },
     searchBar: { 
         classVariant: styles.justifyEnd,
         buttons: [
@@ -33,7 +44,6 @@ const FOOTER_CONFIG = {
             },
         ],
     },
-    saveForm: {},
 };
 
 
@@ -55,7 +65,7 @@ function Footer(props) {
     console.log(props.onClickNavButtons[0]);
 
     console.log('config.onClick vaut:');
-    console.log(config.onClick);
+    console.log(config.buttons);
 
     
     return (
