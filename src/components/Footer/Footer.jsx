@@ -4,6 +4,7 @@ import Button2 from '../ui/Button2';
 const FOOTER_CONFIG = { 
     connect: {
         classVariant: styles.justifyBetween,
+        isHidden: true,
         buttons: [
             {        
                 content: 'Back',
@@ -16,6 +17,7 @@ const FOOTER_CONFIG = {
     },
     searchBar: { 
         classVariant: styles.justifyEnd,
+        isHidden: true,
         buttons: [
             {
                 content: 'Show last results',
@@ -25,6 +27,7 @@ const FOOTER_CONFIG = {
     },
     trackList: {
         classVariant: styles.justifyStart,
+        isHidden: false,
         buttons: [
             {        
                 content: 'Make another search',
@@ -34,6 +37,7 @@ const FOOTER_CONFIG = {
     },
     playlist: {
         classVariant: styles.justifyBetween,
+        isHidden: false,
         buttons: [
             {        
                 content: 'Back',
@@ -55,6 +59,10 @@ function Footer(props) {
         newSearch: props.onClickNavButtons[2], 
     };
 
+    if (Boolean(props.trackList)) {
+        FOOTER_CONFIG.searchBar.isHidden = false;
+    }
+
     console.log('dans Footer,');
     console.log('props.appState vaut:');
     console.log(props.appState);
@@ -69,7 +77,7 @@ function Footer(props) {
 
     
     return (
-        <footer className={`${styles.footer} ${config.classVariant}`}>
+        <footer className={ config.isHidden ? styles.isHidden : `${styles.footer} ${config.classVariant}`}>
           {config.buttons?.map((button, index) => (
             <Button2 
               key={index}

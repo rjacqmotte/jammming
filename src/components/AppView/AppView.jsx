@@ -25,6 +25,7 @@ function AppView(props) {
         {props.appState.view !== 'connect' && (<Footer
           appState={props.appState}
           onClickNavButtons={props.onClickNavButtons}
+          trackList={props.trackList}
         />)}
       </div>
     </>

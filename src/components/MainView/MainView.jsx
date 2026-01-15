@@ -13,6 +13,7 @@ function MainView(props) {
             searchValue={props.searchValue}
             onSearchChange={props.onSearchChange}
             onSearch={props.onSearch}
+            tracklist={props.tracklist}git
           />
         )}
         {props.appState.view === 'trackList' && (

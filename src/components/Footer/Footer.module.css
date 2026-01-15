@@ -16,3 +16,7 @@
 .justifyBetween {
     justify-content: space-between;
 }
+
+.isHidden {
+    display: none;
+}
