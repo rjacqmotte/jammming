@@ -150,6 +150,7 @@ function App() {
     }
     */
     setTrackList([]);
+    setSelectedTracks([]);
     nextState();
   }
 
@@ -166,6 +167,7 @@ function App() {
     */
 
     setTrackList([]);
+    setSelectedTracks([]);
     nextState();
   }
 
