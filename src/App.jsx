@@ -141,24 +141,32 @@ function App() {
   async function handleTagPlaylist(event, playlist, tags = 'my_playlist') {
     event.preventDefault();
     console.log('bouton - enregistrer la playlist - cliqué!');
+
     // boucle d'appel api, un appel pour chaque track de la playlist
-    for (const track of playlist) {
+    /** for (const track of playlist) {
       await saveTags(track.artist, track.name, tags);
       console.log(`track sauvegardée`);
       console.log(track);
     }
+    */
+    setTrackList([]);
+    nextState();
   }
 
   // --- LIKE TRACKS ---
   // like les tracks enregistré sur la session utilisateur lastFM
   async function handleLikePlaylist(event, playlist) {
     event.preventDefault();
-
+    /** 
     for (const track of playlist) {
       await likeTrack(track.name, track.artist);
       console.log('track likée:');
       console.log(track);
     }
+    */
+
+    setTrackList([]);
+    nextState();
   }
 
   // --- GESTION DES VUES ET DE LA NAVIGATION DE L'APPLICATION ---
@@ -172,7 +180,6 @@ function App() {
     { view: 'searchBar' },
     { view: 'trackList' },
     { view: 'playlist' },
-    { view: 'saveForm' },
     { view: 'confirmSave' },
   ];
 
@@ -229,6 +236,7 @@ function App() {
         onTagPlaylist={handleTagPlaylist}
         onLikePlaylist={handleLikePlaylist}
         onLogOut={logoutLastfm}
+        onChangeView={newSearch}
       />
     </>
   );

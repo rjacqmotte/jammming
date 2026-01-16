@@ -1,0 +1,10 @@
+.confirmSaveContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.confirmSaveTitle {
+    text-align: center;
+}

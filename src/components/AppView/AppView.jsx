@@ -20,6 +20,7 @@ function AppView(props) {
           selectedTracks={props.selectedTracks}
           onTagPlaylist={props.onTagPlaylist}
           onLikePlaylist={props.onLikePlaylist}
+          onChangeView={props.onChangeView}
         />
         <Footer
           appState={props.appState}

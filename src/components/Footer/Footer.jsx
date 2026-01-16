@@ -1,5 +1,6 @@
 import styles from './Footer.module.css';
 import Button2 from '../ui/Button2';
+import { useEffect, useState } from 'react';
 
 const FOOTER_CONFIG = { 
     connect: {
@@ -48,6 +49,11 @@ const FOOTER_CONFIG = {
             },
         ],
     },
+    confirmSave: {
+        classVariant: styles.justifyBetween,
+        isHidden: true,
+        buttons: [],
+    },
 };
 
 
@@ -59,9 +65,26 @@ function Footer(props) {
         newSearch: props.onClickNavButtons[2], 
     };
 
-    if (Boolean(props.trackList)) {
-        FOOTER_CONFIG.searchBar.isHidden = false;
-    }
+    // gèrer l'état affiché ou non
+    const (isHidden, setIsHidden) = useState(false);
+
+    // utilise .isHidden de FOOTER_CONFIG pour modifier l'état isHidden
+    useEffect(() => {
+        function isItHidden() {
+            let boolean;
+            if(props.appState.view === 'searchBar') {
+                if(Boolean(props.trackList)) {
+                    boolean = false;
+                } else {
+                    boolean = true;
+                }
+            } else {
+                boolean = config.isHidden;
+            }
+            return boolean;
+        }
+        setIsHidden(isItHidden());
+    }, [props.trackList, props.appState.view]);
 
     console.log('dans Footer,');
     console.log('props.appState vaut:');
@@ -77,7 +100,7 @@ function Footer(props) {
 
     
     return (
-        <footer className={ config.isHidden ? styles.isHidden : `${styles.footer} ${config.classVariant}`}>
+        <footer className={ isHidden  ? styles.isHidden : `${styles.footer} ${config.classVariant}`}>
           {config.buttons?.map((button, index) => (
             <Button2 
               key={index}
