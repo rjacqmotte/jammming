@@ -68,29 +68,18 @@ function Footer(props) {
   function isItHidden() {
     let boolean;
     if (props.appState.view === 'searchBar') {
-      if (Boolean(props.trackList)) {
-        boolean = false;
-      } else {
+      if (props.trackList.length === 0) {
         boolean = true;
+      } else {
+        boolean = false;
       }
     } else {
       boolean = config.isHidden;
     }
     return boolean;
   }
+
   const isHidden = isItHidden();
-
-  console.log('dans Footer,');
-  console.log('props.appState vaut:');
-  console.log(props.appState);
-  console.log('props.onClickNavButtons vaut:');
-  console.log(props.onClickNavButtons);
-
-  console.log('props.onClickNavButtons[0] vaut:');
-  console.log(props.onClickNavButtons[0]);
-
-  console.log('config.onClick vaut:');
-  console.log(config.buttons);
 
   return (
     <footer

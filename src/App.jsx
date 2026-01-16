@@ -89,7 +89,7 @@ function App() {
   // --- SEARCH ---
   /** liste de morceau. c'est la réponse de l'api à la demande de recherche. array d'object.
    * cette variable est envoyée à TrackList qui la décompose en différentes Track. */
-  const [trackList, setTrackList] = useState();
+  const [trackList, setTrackList] = useState([]);
 
   // gérer le input de la barre de recherche des morceaus de chanson dans SearchBar.jsx
   const [searchValue, setSearchValue] = useState('');

@@ -28,3 +28,13 @@
   font-size: 1.2em;
   transform: translate(0, -10%);
 }
+
+.textButton:active {
+  border: none;
+  transform: scale(0.95);
+}
+
+.textButton:focus {
+  border: none;
+  outline: none;
+}
