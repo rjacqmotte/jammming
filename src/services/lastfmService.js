@@ -40,7 +40,9 @@ export async function createLastfmSession(token, apiKey, secret, apiUrl) {
 // redirige vers le site de last fm pour valider la connection client.
 export function connectToLastfm() {
   const apiKey = import.meta.env.VITE_LASTFM_API_KEY;
-  const callbackUrl = encodeURIComponent('http://localhost:5173/callback');
+
+  // Utilise l'URL actuelle du site (fonctionne en local ET en production)
+  const callbackUrl = encodeURIComponent(`${window.location.origin}/callback`);
 
   console.log('request to connect to Lastfm. redirect to lastfm');
   window.location.href = `http://www.last.fm/api/auth/?api_key=${apiKey}&cb=${callbackUrl}`;
